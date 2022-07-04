@@ -1,17 +1,31 @@
 ﻿using System;
 using System.Linq;
+using System.Security.Authentication;
 using System.Windows.Forms;
 using Microsoft.EntityFrameworkCore;
 using CurrencyApp.Core;
 using CurrencyApp.Model;
+using Курсова.Services;
 
 namespace CurrencyApp
 {
     public partial class MainForm : Form
     {
-        public MainForm()
+	    private static MainForm _mainForm;
+
+        private MainForm()
         {
             InitializeComponent();
+        }
+
+        public static MainForm GetInstance()
+        {
+	        if (_mainForm == null)
+	        {
+		        _mainForm = new MainForm();
+	        }
+
+	        return _mainForm;
         }
 
 		private void LoginButton_Click(object sender, EventArgs e)
@@ -21,68 +35,30 @@ namespace CurrencyApp
 			var userName = LoginTextBox.Text.Trim();
 			var password = PasswordTextBox.Text.Trim();
 
-			if (string.IsNullOrEmpty(userName))
+			try
 			{
-				label2.Text += "Ви не ввели логін!\n";
+				var formToRedirect = (Form) AuthenticationService.Authenticate(userName, password);
+				FormRedirection.Redirect(this, formToRedirect);
 			}
-			if (string.IsNullOrEmpty(password))
-			{
-				label2.Text += "Ви не ввели пароль!\n";
-			}
-
-			if (!string.IsNullOrEmpty(label2.Text))
+			catch (AuthenticationException ex)
 			{
 				label2.Visible = true;
-				return;
-			}
-
-			using (DBAppContext db = new DBAppContext())
-			{
-				User user = db.Users.FirstOrDefault(u => u.UserName.Equals(userName));
-				if (user == null)
-				{
-					label2.Visible = true;
-					label2.Text = "Даного користувача не існує";
-					return;
-				}
-				else if (!user.Password.Equals(password))
-				{
-					label2.Visible = true;
-					label2.Text = "Уведений неправильний пароль";
-					return;
-				}
-
-				CurrentUser currentUser1 = CurrentUser.GetInstance();
-				currentUser1.Id = user.Id;
-				currentUser1.IsBankUser = user.IsBankUser;
-
-				Form form = null;
-
-				if (user.UserName.Equals("admin"))
-				{
-					form = new AdminForm();
-				} else if (user.IsBankUser)
-				{
-					form = new BankUserForm();
-				}
-
-				this.Hide();
-				form.Show();
+				label2.Text = ex.Message;
 			}
 		}
 
 		private void GuestButton_Click(object sender, EventArgs e)
 		{
-			CurrentUser currentUser = CurrentUser.GetInstance();
-			using (DBAppContext db = new DBAppContext())
+			try
 			{
-				currentUser.Id = db.Users.Include(u => u.Bank).FirstOrDefault(u => u.UserName == null).Id;
-				currentUser.IsBankUser = false;
+				var formToRedirect = (Form) AuthenticationService.AuthenticateGuest();
+				FormRedirection.Redirect(this, formToRedirect);
 			}
-
-			Form form = new GuestForm();
-			this.Hide();
-			form.Show();
+			catch (AuthenticationException ex)
+			{
+				label2.Visible = true;
+				label2.Text = ex.Message;
+			}
 		}
 	}
 }

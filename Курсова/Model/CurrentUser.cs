@@ -1,8 +1,14 @@
-﻿namespace CurrencyApp.Model
+﻿using System.Runtime.InteropServices;
+
+namespace CurrencyApp.Model
 {
-	public class CurrentUser: User
+	public class CurrentUser
 	{
 		private static CurrentUser _currentUser;
+
+		public int Id { get; set; }
+		public string UserName { get; set; }
+		public bool IsBankUser { get; set; }
 
 		private CurrentUser()
 		{

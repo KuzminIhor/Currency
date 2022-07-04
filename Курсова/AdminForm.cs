@@ -12,6 +12,7 @@ using CurrencyApp.Core;
 using CurrencyApp.Helpers;
 using CurrencyApp.Interfaces;
 using CurrencyApp.Model;
+using Курсова.Services;
 using Currency = CurrencyApp.Model.Currency;
 
 namespace CurrencyApp
@@ -22,11 +23,13 @@ namespace CurrencyApp
 		private DataTable banksDataTable = new DataTable();
 		private DataTable currenciesDataTable = new DataTable();
 
-		private IRenderBank renderBank;
-		private IRenderUser renderUser;
-		private IRenderCurrency renderCurrency;
+		private IRenderDataTableRows renderBank;
+		private IRenderDataTableRows renderUser;
+		private IRenderDataTableRows renderCurrency;
 
-		public AdminForm()
+		private static AdminForm _adminForm;
+
+		private AdminForm()
 		{
 			InitializeComponent();
 			renderBank = new RenderBank();
@@ -34,6 +37,16 @@ namespace CurrencyApp
 			renderCurrency = new RenderCurrency();
 
 			FillDataTables();
+		}
+
+		public static AdminForm GetInstance()
+		{
+			if (_adminForm == null)
+			{
+				_adminForm = new AdminForm();
+			}
+
+			return _adminForm;
 		}
 
 		private void FillDataTables()

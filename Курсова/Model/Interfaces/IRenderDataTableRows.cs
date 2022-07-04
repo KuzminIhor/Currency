@@ -2,7 +2,7 @@
 
 namespace CurrencyApp.Interfaces
 {
-	public interface IRenderCurrency
+	public interface IRenderDataTableRows
 	{
 		public void GetRows(DataTable dt);
 	}

@@ -5,7 +5,7 @@ using CurrencyApp.Interfaces;
 
 namespace CurrencyApp.Helpers
 {
-	public class RenderCurrency: IRenderCurrency
+	public class RenderCurrency: IRenderDataTableRows
 	{
 		public void GetRows(DataTable dt)
 		{

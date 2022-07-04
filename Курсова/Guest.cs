@@ -9,9 +9,21 @@ namespace CurrencyApp
 {
     public partial class GuestForm : Form
     {
-        public GuestForm()
+	    private static GuestForm _guestForm;
+
+	    private GuestForm()
         {
             InitializeComponent();
+        }
+
+        public static GuestForm GetInstance()
+        {
+	        if (_guestForm == null)
+	        {
+		        _guestForm = new GuestForm();
+	        }
+
+	        return _guestForm;
         }
 
 		private void DoneButton_Click(object sender, EventArgs e)

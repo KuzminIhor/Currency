@@ -11,13 +11,25 @@ namespace CurrencyApp
     public partial class BankUserForm: Form
     {
 	    private DataTable dt;
-        public BankUserForm()
+	    private static BankUserForm _bankUserForm;
+
+        private BankUserForm()
         {
             InitializeComponent();
 			FillTable();
         }
 
-        private void FillTable()
+        public static BankUserForm GetInstance()
+        {
+	        if (_bankUserForm == null)
+	        {
+		        _bankUserForm = new BankUserForm();
+	        }
+
+	        return _bankUserForm;
+        }
+
+		private void FillTable()
         {
 	        dataGridView1.Columns.Clear();
 			dt = new DataTable();
@@ -60,7 +72,7 @@ namespace CurrencyApp
 
 		private void AddCurrencyButton_Click(object sender, EventArgs e)
 		{
-			Form form = new AddBankCurrency();
+			Form form = AddBankCurrency.GetInstance();
             this.Hide();
             form.Show();
 		}

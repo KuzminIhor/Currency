@@ -3,9 +3,9 @@ using System.Linq;
 using CurrencyApp.Core;
 using CurrencyApp.Interfaces;
 
-namespace CurrencyApp.Helpers
+namespace Курсова.Services
 {
-	public class RenderBank: IRenderBank
+	public class RenderBank: IRenderDataTableRows
 	{
 		public void GetRows(DataTable dt)
 		{

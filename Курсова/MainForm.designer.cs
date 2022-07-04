@@ -43,11 +43,11 @@
 			this.AthLabel.AutoSize = true;
 			this.AthLabel.Font = new System.Drawing.Font("Times New Roman", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
 			this.AthLabel.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-			this.AthLabel.Location = new System.Drawing.Point(292, 141);
+			this.AthLabel.Location = new System.Drawing.Point(252, 109);
 			this.AthLabel.Name = "AthLabel";
-			this.AthLabel.Size = new System.Drawing.Size(245, 45);
+			this.AthLabel.Size = new System.Drawing.Size(307, 45);
 			this.AthLabel.TabIndex = 0;
-			this.AthLabel.Text = "Авторизація";
+			this.AthLabel.Text = "Аутентифікація";
 			this.AthLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// LoginTextBox

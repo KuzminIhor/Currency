@@ -1,11 +1,17 @@
 ﻿using System.Data.OleDb;
 using System.Windows.Forms;
+using CurrencyApp.Interfaces;
 
 namespace Курсова.Services
 {
-	public static class FormRedirection
+	public class FormRedirection : IFormRedirection
 	{
-		public static void Redirect(Form oldForm, Form newForm)
+		public FormRedirection()
+		{
+
+		}
+
+		public void Redirect(Form oldForm, Form newForm)
 		{
 			oldForm.Hide();
 			newForm.Show();

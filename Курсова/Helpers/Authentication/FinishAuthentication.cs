@@ -9,6 +9,13 @@ namespace CurrencyApp.Helpers
 {
 	public class FinishAuthentication: AbstractAuthenticationHandler
 	{
+		private readonly DBAppContext db;
+
+		public FinishAuthentication()
+		{
+			db = ServiceLocator.Get<DBAppContext>();
+		}
+
 		public override object Handle(string userName, string password)
 		{
 			Form form = GuestForm.GetInstance();
@@ -18,19 +25,17 @@ namespace CurrencyApp.Helpers
 				return form;
 			}
 
-			using (DBAppContext db = new DBAppContext())
-			{
-				CurrentUser currentUser = CurrentUser.GetInstance();
+			CurrentUser currentUser = CurrentUser.GetInstance();
 
-				if (currentUser.UserName.Equals("admin"))
-				{
-					form = AdminForm.GetInstance();
-				}
-				else if (currentUser.IsBankUser)
-				{
-					form = BankUserForm.GetInstance();
-				}
+			if (currentUser.UserName.Equals("admin"))
+			{
+				form = AdminForm.GetInstance();
 			}
+			else if (currentUser.IsBankUser)
+			{
+				form = BankUserForm.GetInstance();
+			}
+
 
 			return form;
 		}

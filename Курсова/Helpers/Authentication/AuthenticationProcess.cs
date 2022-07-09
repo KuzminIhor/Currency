@@ -9,6 +9,13 @@ namespace CurrencyApp.Helpers
 {
 	public class AuthenticationProcess: AbstractAuthenticationHandler
 	{
+		private readonly DBAppContext db;
+
+		public AuthenticationProcess()
+		{
+			db = ServiceLocator.Get<DBAppContext>();
+		}
+
 		public override object Handle(string userName, string password)
 		{
 			if (userName.Equals("guest"))
@@ -16,25 +23,22 @@ namespace CurrencyApp.Helpers
 				return base.Handle(userName, password);
 			}
 
-			using (DBAppContext db = new DBAppContext())
-			{
-				User user = db.Users.FirstOrDefault(u => u.UserName.Equals(userName));
-				
-				if (user == null)
-				{
-					throw new AuthenticationException("Такого користувача не існує!!\n");
-				}
-				
-				if (!user.Password.Equals(password))
-				{
-					throw new AuthenticationException("Пароль не є вірним!\n");
-				}
+			User user = db.Users.FirstOrDefault(u => u.UserName.Equals(userName));
 
-				CurrentUser currentUser = CurrentUser.GetInstance();
-				currentUser.Id = user.Id;
-				currentUser.UserName = user.UserName;
-				currentUser.IsBankUser = user.IsBankUser;
+			if (user == null)
+			{
+				throw new AuthenticationException("Такого користувача не існує!!\n");
 			}
+
+			if (!user.Password.Equals(password))
+			{
+				throw new AuthenticationException("Пароль не є вірним!\n");
+			}
+
+			CurrentUser currentUser = CurrentUser.GetInstance();
+			currentUser.Id = user.Id;
+			currentUser.UserName = user.UserName;
+			currentUser.IsBankUser = user.IsBankUser;
 
 			return base.Handle(userName, password);
 		}

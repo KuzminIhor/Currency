@@ -4,7 +4,7 @@ using CurrencyApp.Helpers;
 using CurrencyApp.Interfaces;
 using CurrencyApp.Model.Abstracts;
 
-namespace Курсова.Services
+namespace CurrencyApp.Services
 {
 	public class AuthenticationService: IAuthenticationService
 	{

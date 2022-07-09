@@ -12,7 +12,7 @@ using CurrencyApp.Core;
 using CurrencyApp.Helpers;
 using CurrencyApp.Interfaces;
 using CurrencyApp.Model;
-using Курсова.Services;
+using CurrencyApp.Services;
 using Currency = CurrencyApp.Model.Currency;
 
 namespace CurrencyApp

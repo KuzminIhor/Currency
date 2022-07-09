@@ -5,6 +5,11 @@ namespace CurrencyApp.Helpers
 {
 	public class AuthenticationFieldsValidator: AbstractAuthenticationHandler
 	{
+		public AuthenticationFieldsValidator()
+		{
+
+		}
+
 		public override object Handle(string userName, string password)
 		{
 			if (string.IsNullOrEmpty(userName))

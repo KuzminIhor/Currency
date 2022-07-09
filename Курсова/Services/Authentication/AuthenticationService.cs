@@ -1,32 +1,38 @@
 ﻿using System.Windows.Forms;
+using CurrencyApp.Core;
 using CurrencyApp.Helpers;
 using CurrencyApp.Interfaces;
+using CurrencyApp.Model.Abstracts;
 
 namespace Курсова.Services
 {
-	public class AuthenticationService
+	public class AuthenticationService: IAuthenticationService
 	{
-		public static object Authenticate(string userName, string password)
+		private readonly AbstractAuthenticationHandler validator;
+		private readonly AbstractAuthenticationHandler authProcess;
+		private readonly AbstractAuthenticationHandler finishAuth;
+
+		public AuthenticationService()
 		{
-			var validator = new AuthenticationFieldsValidator();
-			var authProcess = new AuthenticationProcess();
-			var finishAuth = new FinishAuthentication();
-			
+			validator = ServiceLocator.Get<AbstractAuthenticationHandler>(nameof(AuthenticationFieldsValidator));
+			authProcess = ServiceLocator.Get<AbstractAuthenticationHandler>(nameof(AuthenticationProcess));
+			finishAuth = ServiceLocator.Get<AbstractAuthenticationHandler>(nameof(FinishAuthentication));
+		}
+
+		public object Authenticate(string userName, string password)
+		{
 			validator.SetNext(authProcess).SetNext(finishAuth);
 
-			var formToRedirect = (Form) validator.Handle(userName, password);
+			var formToRedirect = validator.Handle(userName, password) as Form;
 
 			return formToRedirect;
 		}
 
-		public static object AuthenticateGuest()
+		public object AuthenticateGuest()
 		{
-			var authProcess = new AuthenticationProcess();
-			var finishAuth = new FinishAuthentication();
-
 			authProcess.SetNext(finishAuth);
 
-			var formToRedirect = (Form) authProcess.Handle("guest", string.Empty);
+			var formToRedirect = authProcess.Handle("guest", string.Empty) as Form;
 
 			return formToRedirect;
 		}

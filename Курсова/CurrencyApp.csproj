@@ -278,7 +278,7 @@
     <Compile Include="Model\Interfaces\Services\IFormRedirection.cs" />
     <Compile Include="Model\Interfaces\Services\IRenderDataTableRows.cs" />
     <Compile Include="Model\Abstracts\Helpers\AbstractAuthenticationHandler.cs" />
-    <Compile Include="Services\Authentication\AuthenticationService.cs" />
+    <Compile Include="Services\AuthenticationService.cs" />
     <Compile Include="Services\FormRedirection.cs" />
     <Compile Include="Services\RenderBank.cs" />
     <Compile Include="Services\RenderCurrency.cs" />

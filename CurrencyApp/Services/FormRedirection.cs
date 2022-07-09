@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using CurrencyApp.Interfaces;
 
-namespace Курсова.Services
+namespace CurrencyApp.Services
 {
 	public class FormRedirection : IFormRedirection
 	{

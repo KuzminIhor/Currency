@@ -7,7 +7,7 @@ using CurrencyApp.Core;
 using CurrencyApp.Interfaces;
 using CurrencyApp.Model;
 using NLog;
-using Курсова.Services;
+using CurrencyApp.Services;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace CurrencyApp

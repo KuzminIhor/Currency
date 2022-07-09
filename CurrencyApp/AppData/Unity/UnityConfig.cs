@@ -8,9 +8,9 @@ using CurrencyApp.Helpers;
 using CurrencyApp.Interfaces;
 using CurrencyApp.Model.Abstracts;
 using Unity;
-using Курсова.Services;
+using CurrencyApp.Services;
 
-namespace Курсова.AppData.Unity
+namespace CurrencyApp.AppData.Unity
 {
 	public class UnityConfig
 	{

@@ -3,7 +3,7 @@ using System.Linq;
 using CurrencyApp.Core;
 using CurrencyApp.Interfaces;
 
-namespace Курсова.Services
+namespace CurrencyApp.Services
 {
 	public class RenderBank: IRenderDataTableRows
 	{

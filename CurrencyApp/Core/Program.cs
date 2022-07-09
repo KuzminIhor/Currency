@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using NLog;
-using Курсова.AppData.Unity;
+using CurrencyApp.AppData.Unity;
 
 namespace CurrencyApp.Core
 {

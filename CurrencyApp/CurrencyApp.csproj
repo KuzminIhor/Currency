@@ -273,6 +273,9 @@
     <Compile Include="Helpers\Authentication\AuthenticationFieldsValidator.cs" />
     <Compile Include="Helpers\Authentication\AuthenticationProcess.cs" />
     <Compile Include="Helpers\Authentication\FinishAuthentication.cs" />
+    <Compile Include="Model\Interfaces\Helpers\IAuthenticationFieldsValidator.cs" />
+    <Compile Include="Model\Interfaces\Helpers\IAuthenticationProcess.cs" />
+    <Compile Include="Model\Interfaces\Helpers\IFinishAuthentication.cs" />
     <Compile Include="Model\Interfaces\Services\Authentication\IAuthenticationHandler.cs" />
     <Compile Include="Model\Interfaces\Services\Authentication\IAuthenticationService.cs" />
     <Compile Include="Model\Interfaces\Services\IFormRedirection.cs" />
@@ -396,7 +399,6 @@
     <Folder Include="Model\Abstracts\Services\" />
     <Folder Include="Model\Enums\" />
     <Folder Include="Model\Exceptions\" />
-    <Folder Include="Model\Interfaces\Helpers\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Data.SqlClient.SNI.1.1.0\build\net46\Microsoft.Data.SqlClient.SNI.targets" Condition="Exists('..\packages\Microsoft.Data.SqlClient.SNI.1.1.0\build\net46\Microsoft.Data.SqlClient.SNI.targets')" />

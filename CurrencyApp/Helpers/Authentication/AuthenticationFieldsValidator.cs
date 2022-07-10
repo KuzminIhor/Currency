@@ -1,9 +1,10 @@
 ﻿using System.Security.Authentication;
 using CurrencyApp.Model.Abstracts;
+using CurrencyApp.Model.Interfaces.Helpers;
 
 namespace CurrencyApp.Helpers
 {
-	public class AuthenticationFieldsValidator: AbstractAuthenticationHandler
+	public class AuthenticationFieldsValidator: AbstractAuthenticationHandler, IAuthenticationFieldsValidator
 	{
 		public AuthenticationFieldsValidator()
 		{
@@ -11,6 +12,13 @@ namespace CurrencyApp.Helpers
 		}
 
 		public override object Handle(string userName, string password)
+		{
+			Validate(userName, password);
+
+			return base.Handle(userName, password);
+		}
+
+		public void Validate(string userName, string password)
 		{
 			if (string.IsNullOrEmpty(userName))
 			{
@@ -21,8 +29,6 @@ namespace CurrencyApp.Helpers
 			{
 				throw new AuthenticationException("Ви не ввели пароль!\n");
 			}
-
-			return base.Handle(userName, password);
 		}
 	}
 }

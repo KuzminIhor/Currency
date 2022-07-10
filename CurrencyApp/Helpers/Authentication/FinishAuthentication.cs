@@ -4,10 +4,11 @@ using System.Windows.Forms;
 using CurrencyApp.Core;
 using CurrencyApp.Model;
 using CurrencyApp.Model.Abstracts;
+using CurrencyApp.Model.Interfaces.Helpers;
 
 namespace CurrencyApp.Helpers
 {
-	public class FinishAuthentication: AbstractAuthenticationHandler
+	public class FinishAuthentication: AbstractAuthenticationHandler, IFinishAuthentication
 	{
 		private readonly DBAppContext db;
 
@@ -17,6 +18,12 @@ namespace CurrencyApp.Helpers
 		}
 
 		public override object Handle(string userName, string password)
+		{
+			var form = GetFormToRedirect(userName, password);
+			return form;
+		}
+
+		public Form GetFormToRedirect(string userName, string password)
 		{
 			Form form = GuestForm.GetInstance();
 
@@ -35,7 +42,6 @@ namespace CurrencyApp.Helpers
 			{
 				form = BankUserForm.GetInstance();
 			}
-
 
 			return form;
 		}

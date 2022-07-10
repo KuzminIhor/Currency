@@ -7,6 +7,7 @@ using CurrencyApp.Core;
 using CurrencyApp.Helpers;
 using CurrencyApp.Interfaces;
 using CurrencyApp.Model.Abstracts;
+using CurrencyApp.Model.Interfaces.Helpers;
 using Unity;
 using CurrencyApp.Services;
 
@@ -26,9 +27,9 @@ namespace CurrencyApp.AppData.Unity
 			ServiceLocator.RegisterSingleton<IFormRedirection, FormRedirection>();
 
 			//Register helpers
-			ServiceLocator.RegisterSingleton<AbstractAuthenticationHandler, AuthenticationFieldsValidator>(nameof(AuthenticationFieldsValidator));
-			ServiceLocator.RegisterSingleton<AbstractAuthenticationHandler, AuthenticationProcess>(nameof(AuthenticationProcess));
-			ServiceLocator.RegisterSingleton<AbstractAuthenticationHandler, FinishAuthentication>(nameof(FinishAuthentication));
+			ServiceLocator.RegisterSingleton<IAuthenticationFieldsValidator, AuthenticationFieldsValidator>();
+			ServiceLocator.RegisterSingleton<IAuthenticationProcess, AuthenticationProcess>();
+			ServiceLocator.RegisterSingleton<IFinishAuthentication, FinishAuthentication>();
 		}
 	}
 }

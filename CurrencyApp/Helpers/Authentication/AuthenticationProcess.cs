@@ -4,10 +4,11 @@ using System.Windows.Forms;
 using CurrencyApp.Core;
 using CurrencyApp.Model;
 using CurrencyApp.Model.Abstracts;
+using CurrencyApp.Model.Interfaces.Helpers;
 
 namespace CurrencyApp.Helpers
 {
-	public class AuthenticationProcess: AbstractAuthenticationHandler
+	public class AuthenticationProcess: AbstractAuthenticationHandler, IAuthenticationProcess
 	{
 		private readonly DBAppContext db;
 
@@ -23,6 +24,13 @@ namespace CurrencyApp.Helpers
 				return base.Handle(userName, password);
 			}
 
+			Authenticate(userName, password);
+
+			return base.Handle(userName, password);
+		}
+
+		public void Authenticate(string userName, string password)
+		{
 			User user = db.Users.FirstOrDefault(u => u.UserName.Equals(userName));
 
 			if (user == null)
@@ -39,8 +47,6 @@ namespace CurrencyApp.Helpers
 			currentUser.Id = user.Id;
 			currentUser.UserName = user.UserName;
 			currentUser.IsBankUser = user.IsBankUser;
-
-			return base.Handle(userName, password);
 		}
 	}
 }

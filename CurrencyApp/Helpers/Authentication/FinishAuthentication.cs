@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using CurrencyApp.Core;
 using CurrencyApp.Model;
 using CurrencyApp.Model.Abstracts;
+using CurrencyApp.Model.Enums;
 using CurrencyApp.Model.Interfaces.Helpers;
 
 namespace CurrencyApp.Helpers
@@ -12,9 +13,9 @@ namespace CurrencyApp.Helpers
 	{
 		private readonly DBAppContext db;
 
-		public FinishAuthentication()
+		public FinishAuthentication(DBAppContext db)
 		{
-			db = ServiceLocator.Get<DBAppContext>();
+			this.db = db;
 		}
 
 		public override object Handle(string userName, string password)
@@ -23,27 +24,17 @@ namespace CurrencyApp.Helpers
 			return form;
 		}
 
-		public Form GetFormToRedirect(string userName, string password)
+		public FormType GetFormToRedirect(string userName, string password)
 		{
-			Form form = GuestForm.GetInstance();
-
 			if (userName.Equals("guest"))
 			{
-				return form;
-			}
-
-			CurrentUser currentUser = CurrentUser.GetInstance();
-
-			if (currentUser.UserName.Equals("admin"))
+				return FormType.GuestForm;
+			} else if (userName.Equals("admin"))
 			{
-				form = AdminForm.GetInstance();
-			}
-			else if (currentUser.IsBankUser)
-			{
-				form = BankUserForm.GetInstance();
+				return FormType.AdminForm;
 			}
 
-			return form;
+			return FormType.BankUserForm;
 		}
 	}
 }

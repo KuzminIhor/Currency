@@ -5,16 +5,20 @@ using CurrencyApp.Core;
 using CurrencyApp.Model;
 using CurrencyApp.Model.Abstracts;
 using CurrencyApp.Model.Interfaces.Helpers;
+using CurrencyApp.Repositories.Interfaces;
 
 namespace CurrencyApp.Helpers
 {
 	public class AuthenticationProcess: AbstractAuthenticationHandler, IAuthenticationProcess
 	{
 		private readonly DBAppContext db;
+		private IUserRepository UserRepository { get; }
 
-		public AuthenticationProcess()
+		public AuthenticationProcess(DBAppContext db,
+			IUserRepository userRepository)
 		{
-			db = ServiceLocator.Get<DBAppContext>();
+			this.db = db;
+			UserRepository = userRepository;
 		}
 
 		public override object Handle(string userName, string password)
@@ -31,14 +35,14 @@ namespace CurrencyApp.Helpers
 
 		public void Authenticate(string userName, string password)
 		{
-			User user = db.Users.FirstOrDefault(u => u.UserName.Equals(userName));
-
+			User user = UserRepository.GetByUserName(userName);
+				
 			if (user == null)
 			{
 				throw new AuthenticationException("Такого користувача не існує!!\n");
 			}
 
-			if (!user.Password.Equals(password))
+			if (!UserRepository.IsCorrectPassword(user, password))
 			{
 				throw new AuthenticationException("Пароль не є вірним!\n");
 			}

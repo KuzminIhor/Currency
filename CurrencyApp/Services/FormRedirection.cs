@@ -1,6 +1,7 @@
 ﻿using System.Data.OleDb;
 using System.Windows.Forms;
 using CurrencyApp.Interfaces;
+using CurrencyApp.Model.Enums;
 
 namespace CurrencyApp.Services
 {
@@ -11,10 +12,22 @@ namespace CurrencyApp.Services
 
 		}
 
-		public void Redirect(Form oldForm, Form newForm)
+		public void Redirect(Form oldForm, FormType newForm)
 		{
 			oldForm.Hide();
-			newForm.Show();
+
+			switch (newForm)
+			{
+				case FormType.GuestForm:
+					GuestForm.GetInstance().Show();
+					break;
+				case FormType.AdminForm:
+					AdminForm.GetInstance().Show();
+					break;
+				case FormType.BankUserForm:
+					BankUserForm.GetInstance().Show();
+					break;
+			}
 		}
 	}
 }

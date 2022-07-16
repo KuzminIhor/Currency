@@ -10,7 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyApp.Tests", "CurrencyApp.Tests\CurrencyApp.Tests.csproj", "{4CA0CA7E-FF38-4D6B-B581-73B28A7DB69C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyApp.Tests", "CurrencyApp.Tests\CurrencyApp.Tests.csproj", "{C1260A23-1C66-4791-B21D-1E2F22717BF3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,10 +22,10 @@ Global
 		{E9944D02-2ACC-478D-A90D-1894A53E5F1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E9944D02-2ACC-478D-A90D-1894A53E5F1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E9944D02-2ACC-478D-A90D-1894A53E5F1E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4CA0CA7E-FF38-4D6B-B581-73B28A7DB69C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4CA0CA7E-FF38-4D6B-B581-73B28A7DB69C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4CA0CA7E-FF38-4D6B-B581-73B28A7DB69C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4CA0CA7E-FF38-4D6B-B581-73B28A7DB69C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1260A23-1C66-4791-B21D-1E2F22717BF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1260A23-1C66-4791-B21D-1E2F22717BF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1260A23-1C66-4791-B21D-1E2F22717BF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1260A23-1C66-4791-B21D-1E2F22717BF3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

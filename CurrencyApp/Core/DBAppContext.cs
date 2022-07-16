@@ -13,7 +13,10 @@ namespace CurrencyApp.Core
 
 		public DBAppContext()
 		{
-			Database.EnsureCreated();
+		}
+
+		public DBAppContext(DbContextOptions dbContextOptions)
+		{
 		}
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -8,6 +8,8 @@ using CurrencyApp.Helpers;
 using CurrencyApp.Interfaces;
 using CurrencyApp.Model.Abstracts;
 using CurrencyApp.Model.Interfaces.Helpers;
+using CurrencyApp.Repositories;
+using CurrencyApp.Repositories.Interfaces;
 using Unity;
 using CurrencyApp.Services;
 
@@ -30,6 +32,10 @@ namespace CurrencyApp.AppData.Unity
 			ServiceLocator.RegisterSingleton<IAuthenticationFieldsValidator, AuthenticationFieldsValidator>();
 			ServiceLocator.RegisterSingleton<IAuthenticationProcess, AuthenticationProcess>();
 			ServiceLocator.RegisterSingleton<IFinishAuthentication, FinishAuthentication>();
+
+			//Register repositories
+			ServiceLocator.RegisterSingleton<IUserRepository, UserRepository>();
+			ServiceLocator.RegisterSingleton<IBankCurrenciesRepository, BankCurrenciesRepository>();
 		}
 	}
 }

@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using CurrencyApp.Core;
 using CurrencyApp.Interfaces;
 using CurrencyApp.Model;
+using CurrencyApp.Model.Enums;
 using NLog;
 using CurrencyApp.Services;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
@@ -47,7 +48,7 @@ namespace CurrencyApp
 
 			try
 			{
-				var formToRedirect = (Form) authenticationService.Authenticate(userName, password);
+				var formToRedirect = (FormType) authenticationService.Authenticate(userName, password);
 				formRedirection.Redirect(this, formToRedirect);
 
 				var userType = CurrentUser.GetInstance().Id == 1 ? "Адмін" : "Банк";
@@ -71,7 +72,7 @@ namespace CurrencyApp
 		{
 			try
 			{
-				var formToRedirect = (Form) authenticationService.AuthenticateGuest();
+				var formToRedirect = (FormType) authenticationService.AuthenticateGuest();
 				formRedirection.Redirect(this, formToRedirect);
 				_logger.Info("Аутентифікація пройшла успішно. Тип користувача: Гість");
 			}

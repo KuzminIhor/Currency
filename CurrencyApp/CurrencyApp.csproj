@@ -273,14 +273,19 @@
     <Compile Include="Helpers\Authentication\AuthenticationFieldsValidator.cs" />
     <Compile Include="Helpers\Authentication\AuthenticationProcess.cs" />
     <Compile Include="Helpers\Authentication\FinishAuthentication.cs" />
-    <Compile Include="Model\Interfaces\Helpers\IAuthenticationFieldsValidator.cs" />
-    <Compile Include="Model\Interfaces\Helpers\IAuthenticationProcess.cs" />
-    <Compile Include="Model\Interfaces\Helpers\IFinishAuthentication.cs" />
+    <Compile Include="Model\Enums\FormType.cs" />
+    <Compile Include="Model\Interfaces\Helpers\Authentication\IAuthenticationFieldsValidator.cs" />
+    <Compile Include="Model\Interfaces\Helpers\Authentication\IAuthenticationProcess.cs" />
+    <Compile Include="Model\Interfaces\Helpers\Authentication\IFinishAuthentication.cs" />
     <Compile Include="Model\Interfaces\Services\Authentication\IAuthenticationHandler.cs" />
     <Compile Include="Model\Interfaces\Services\Authentication\IAuthenticationService.cs" />
     <Compile Include="Model\Interfaces\Services\IFormRedirection.cs" />
     <Compile Include="Model\Interfaces\Services\IRenderDataTableRows.cs" />
     <Compile Include="Model\Abstracts\Helpers\AbstractAuthenticationHandler.cs" />
+    <Compile Include="Repositories\BankCurrenciesRepository.cs" />
+    <Compile Include="Repositories\Interfaces\IBankCurrenciesRepository.cs" />
+    <Compile Include="Repositories\Interfaces\IUserRepository.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Services\AuthenticationService.cs" />
     <Compile Include="Services\FormRedirection.cs" />
     <Compile Include="Services\RenderBank.cs" />
@@ -397,7 +402,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Model\Abstracts\Services\" />
-    <Folder Include="Model\Enums\" />
     <Folder Include="Model\Exceptions\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

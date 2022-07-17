@@ -35,6 +35,7 @@ namespace CurrencyApp.AppData.Unity
 
 			//Register repositories
 			ServiceLocator.RegisterSingleton<IUserRepository, UserRepository>();
+			ServiceLocator.RegisterSingleton<IBankCurrenciesRepository, BankCurrenciesRepository>();
 		}
 	}
 }

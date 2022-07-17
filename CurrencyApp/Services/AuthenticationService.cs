@@ -3,6 +3,7 @@ using CurrencyApp.Core;
 using CurrencyApp.Helpers;
 using CurrencyApp.Interfaces;
 using CurrencyApp.Model.Abstracts;
+using CurrencyApp.Model.Enums;
 using CurrencyApp.Model.Interfaces.Helpers;
 
 namespace CurrencyApp.Services
@@ -24,7 +25,7 @@ namespace CurrencyApp.Services
 		{
 			validator.SetNext(authProcess).SetNext(finishAuth);
 
-			var formToRedirect = validator.Handle(userName, password) as Form;
+			var formToRedirect = validator.Handle(userName, password);
 
 			return formToRedirect;
 		}
@@ -33,7 +34,7 @@ namespace CurrencyApp.Services
 		{
 			authProcess.SetNext(finishAuth);
 
-			var formToRedirect = authProcess.Handle("guest", string.Empty) as Form;
+			var formToRedirect = authProcess.Handle("guest", string.Empty);
 
 			return formToRedirect;
 		}

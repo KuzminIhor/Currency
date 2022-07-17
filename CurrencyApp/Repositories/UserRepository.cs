@@ -16,19 +16,21 @@ namespace CurrencyApp.Repositories
 			this.db = db;
 		}
 
+		//Cover with tests
 		public User GetByUserName(string username)
 		{
 ;			return db.Users.FirstOrDefault(u => u.UserName.Equals(username));
 		}
 
-		public List<User> GetUsersExceptAdminAndGuest()
-		{
-			return db.Users.Include(u => u.Bank).Where(u => u.Id > 2).ToList();
-		}
-
+		//Cover with tests
 		public bool IsCorrectPassword(User user, string password)
 		{
 			return user.Password.Equals(password);
+		}
+
+		public List<User> GetUsersExceptAdminAndGuest()
+		{
+			return db.Users.Include(u => u.Bank).Where(u => u.Id > 2).ToList();
 		}
 	}
 }

@@ -17,7 +17,6 @@ namespace CurrencyApp.Repositories
 			this.db = db;
 		}
 
-		//Cover with tests
 		public List<BankCurrency> GetBankCurrenciesInCurrentDateRange(DateTime dateFrom, DateTime dateTo)
 		{
 			return db

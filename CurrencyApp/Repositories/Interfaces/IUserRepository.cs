@@ -7,6 +7,6 @@ namespace CurrencyApp.Repositories.Interfaces
 	{
 		public User GetByUserName(string username);
 		public List<User> GetUsersExceptAdminAndGuest();
-		public bool IsCorrectPassword(User user, string password);
+		public bool IsCorrectPassword(int userId, string password);
 	}
 }

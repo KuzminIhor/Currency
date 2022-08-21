@@ -22,7 +22,8 @@ namespace CurrencyApp.AppData.Unity
 		public static void Register()
 		{
 			//Register Core
-			ServiceLocator.RegisterSingleton<DBAppContext, DBAppContext>();
+			var dbApp = new DBAppContext();
+			ServiceLocator.RegisterSingleton(dbApp);
 
 			//Register services
 			ServiceLocator.RegisterSingleton<IAuthenticationService, AuthenticationService>();

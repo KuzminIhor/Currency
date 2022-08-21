@@ -42,7 +42,7 @@ namespace CurrencyApp.Helpers
 				throw new AuthenticationException("Такого користувача не існує!!\n");
 			}
 
-			if (!UserRepository.IsCorrectPassword(user, password))
+			if (!UserRepository.IsCorrectPassword(user.Id, password))
 			{
 				throw new AuthenticationException("Пароль не є вірним!\n");
 			}

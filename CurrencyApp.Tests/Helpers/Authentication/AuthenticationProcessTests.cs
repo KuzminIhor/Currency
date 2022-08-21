@@ -32,7 +32,7 @@ namespace CurrencyApp.Tests.Helpers.Authentication
 			User user = new User();
 
 			userRepositoryMock.Setup(u => u.GetByUserName(It.IsAny<string>())).Returns(user);
-			userRepositoryMock.Setup(u => u.IsCorrectPassword(user, It.IsAny<string>())).Returns(false);
+			userRepositoryMock.Setup(u => u.IsCorrectPassword(user.Id, It.IsAny<string>())).Returns(false);
 
 			Assert.Throws<AuthenticationException>(() => authenticationProcess.Authenticate(It.IsAny<string>(), It.IsAny<string>()));
 		}
@@ -45,7 +45,7 @@ namespace CurrencyApp.Tests.Helpers.Authentication
 			User user = new User();
 
 			userRepositoryMock.Setup(u => u.GetByUserName(It.IsAny<string>())).Returns(user);
-			userRepositoryMock.Setup(u => u.IsCorrectPassword(user, It.IsAny<string>())).Returns(true);
+			userRepositoryMock.Setup(u => u.IsCorrectPassword(user.Id, It.IsAny<string>())).Returns(true);
 
 			authenticationProcess.Authenticate(It.IsAny<string>(), It.IsAny<string>());
 

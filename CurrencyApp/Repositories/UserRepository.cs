@@ -9,22 +9,21 @@ namespace CurrencyApp.Repositories
 {
 	public class UserRepository: IUserRepository
 	{
-		public DBAppContext db { get; private set; }
+		public readonly DBAppContext db;
 
-		public UserRepository(DBAppContext db)
+		public UserRepository(DBAppContext dbApp)
 		{
-			this.db = db;
+			this.db = dbApp;
 		}
 
-		//Cover with tests
 		public User GetByUserName(string username)
 		{
-;			return db.Users.FirstOrDefault(u => u.UserName.Equals(username));
+			return db.Users.FirstOrDefault(u => u.UserName.Equals(username));
 		}
 
-		//Cover with tests
-		public bool IsCorrectPassword(User user, string password)
+		public bool IsCorrectPassword(int userId, string password)
 		{
+			var user = db.Users.FirstOrDefault(u => u.Id == userId);
 			return user.Password.Equals(password);
 		}
 

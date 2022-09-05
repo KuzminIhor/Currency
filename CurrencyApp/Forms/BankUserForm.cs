@@ -50,7 +50,7 @@ namespace CurrencyApp
 			                 .Where(bc => bc.Bank.Id == bankIdInDb))
 		        {
 			        dt.Rows.Add(rowId++, bankCurrencyValue.Id, bankCurrencyValue.Currency.CurrencyName,
-				        bankCurrencyValue.HryvnaConvertation, bankCurrencyValue.CreationDate,
+				        bankCurrencyValue.UAHConvertation, bankCurrencyValue.CreationDate,
 				        bankCurrencyValue.ModificationDate, bankCurrencyValue.Bank.BankName);
 		        }
 
@@ -94,7 +94,7 @@ namespace CurrencyApp
 		                    var bankCurrencyId = Convert.ToInt32(dr[0].ItemArray[1]);
 		                    label3.Text = bankCurrencyId.ToString();
 
-		                    textBox1.Text = db.BankCurrencies.FirstOrDefault(d => d.Id == bankCurrencyId).HryvnaConvertation.ToString();
+		                    textBox1.Text = db.BankCurrencies.FirstOrDefault(d => d.Id == bankCurrencyId).UAHConvertation.ToString();
 		                    button1.Visible = true;
 	                    }
 
@@ -146,7 +146,7 @@ namespace CurrencyApp
 				var bankCurrency = db.BankCurrencies.Include(bc => bc.Bank).Include(bc => bc.Currency)
 					.FirstOrDefault(bc => bc.Id == Convert.ToInt32(label3.Text));
 
-				bankCurrency.HryvnaConvertation = result;
+				bankCurrency.UAHConvertation = result;
 				bankCurrency.ModificationDate = DateTime.Now;
 				db.BankCurrencies.Update(bankCurrency);
 				db.SaveChanges();

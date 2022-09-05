@@ -56,6 +56,7 @@ namespace CurrencyApp
 			}
 
 			double result = 0;
+
 			if (string.IsNullOrEmpty(convertation))
 			{
 				label1.Text += "Ви не ввели курс валюти!\n";
@@ -82,7 +83,7 @@ namespace CurrencyApp
 				{
 					Currency = currencyInDb,
 					Bank = bankInDb,
-					HryvnaConvertation = result
+					UAHConvertation = result
 				});
 
 				db.SaveChanges();

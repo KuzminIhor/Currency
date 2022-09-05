@@ -18,13 +18,14 @@ namespace CurrencyApp.Core
 
 		public DBAppContext(DbContextOptions dbContextOptions)
 		{
-			this.Database.EnsureDeleted();
-			this.Database.EnsureCreated();
 		}
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=CurrencyApp;Trusted_Connection=True;");
+			if (!optionsBuilder.IsConfigured)
+			{
+				optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=CurrencyApp;Trusted_Connection=True;");
+			}
 		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)

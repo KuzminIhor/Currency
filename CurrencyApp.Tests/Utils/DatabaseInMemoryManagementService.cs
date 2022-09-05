@@ -10,7 +10,7 @@ namespace CurrencyApp.Tests.Utils
 		public static DBAppContext Create()
 		{
 			var options = new DbContextOptionsBuilder<DBAppContext>()
-				.UseInMemoryDatabase(databaseName: "CurrencyAppInMemory")
+				.UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString("N"))
 				.Options;
 
 			var context = new DBAppContext(options);

@@ -75,9 +75,9 @@ namespace CurrencyApp.Tests.Utils
 			{
 				new BankCurrency() 
 				{ 
-					Bank = dbContext.Banks.FirstOrDefault(), 
+					Bank = dbContext.Banks.FirstOrDefault(),
 					Currency = dbContext.Currencies.FirstOrDefault(), 
-					HryvnaConvertation = 15.0, 
+					UAHConvertation = 15.0, 
 					CreationDate = DateTime.Now, 
 					ModificationDate = DateTime.Now
 				},
@@ -85,7 +85,7 @@ namespace CurrencyApp.Tests.Utils
 				{
 					Bank = dbContext.Banks.FirstOrDefault(), 
 					Currency = dbContext.Currencies.FirstOrDefault(), 
-					HryvnaConvertation = 10.0, 
+					UAHConvertation = 10.0, 
 					CreationDate = DateTime.Now.AddDays(1), 
 					ModificationDate = DateTime.Now.AddDays(1)
 				},

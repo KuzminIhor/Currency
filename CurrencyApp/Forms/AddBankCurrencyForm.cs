@@ -10,20 +10,28 @@ using System.Windows.Forms;
 using Microsoft.EntityFrameworkCore;
 using CurrencyApp.Core;
 using CurrencyApp.Model;
+using CurrencyApp.Repositories.Interfaces;
+using NLog;
 
 namespace CurrencyApp
 {
 	public partial class AddBankCurrency : Form
 	{
 		private static AddBankCurrency _addBankCurrencyForm;
+		private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
+		private readonly IBankCurrenciesRepository bankCurrenciesRepository;
+		private readonly ICurrenciesRepository currenciesRepository;
+
 		private AddBankCurrency()
 		{
+			bankCurrenciesRepository = ServiceLocator.Get<IBankCurrenciesRepository>();
+			currenciesRepository = ServiceLocator.Get<ICurrenciesRepository>();
+
 			InitializeComponent();
-			using (DBAppContext db = new DBAppContext())
-			{
-				comboBox1.DataSource = db.Currencies.ToList();
-				comboBox1.DisplayMember = "CurrencyName";
-			}
+
+			comboBox1.DataSource = currenciesRepository.GetCurrencies();
+			comboBox1.DisplayMember = "CurrencyName";
 		}
 
 		public static AddBankCurrency GetInstance()

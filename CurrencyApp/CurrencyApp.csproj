@@ -290,10 +290,10 @@
     <Compile Include="Services\Interfaces\IFormRedirectionService.cs" />
     <Compile Include="Services\Interfaces\IRenderDataTableRows.cs" />
     <Compile Include="Helpers\Abstracts\AbstractAuthenticationHandler.cs" />
-    <Compile Include="Repositories\BankCurrenciesRepository.cs" />
+    <Compile Include="Repositories\BankCurrencyRepository.cs" />
     <Compile Include="Repositories\BankRepository.cs" />
     <Compile Include="Repositories\CurrencyRepository.cs" />
-    <Compile Include="Repositories\Interfaces\IBankCurrenciesRepository.cs" />
+    <Compile Include="Repositories\Interfaces\IBankCurrencyRepository.cs" />
     <Compile Include="Repositories\Interfaces\IBankRepository.cs" />
     <Compile Include="Repositories\Interfaces\ICurrencyRepository.cs" />
     <Compile Include="Repositories\Interfaces\IUserRepository.cs" />

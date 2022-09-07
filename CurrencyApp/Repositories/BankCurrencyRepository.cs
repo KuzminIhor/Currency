@@ -26,6 +26,12 @@ namespace CurrencyApp.Repositories
 				.Where(bc => bc.CreationDate <= dateTo && bc.CreationDate >= dateFrom).ToList();
 		}
 
+		public List<BankCurrency> GetBankCurrenciesByBankId(int bankId)
+		{
+			return db.BankCurrencies.Include(bc => bc.Bank).Include(bc => bc.Currency)
+				.Where(bc => bc.Bank.Id == bankId).ToList();
+		}
+
 		public void AddBankCurrency(Currency currency, Bank bank, double uahConvertation)
 		{
 			db.BankCurrencies.Add(new BankCurrency()

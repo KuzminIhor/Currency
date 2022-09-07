@@ -53,7 +53,7 @@ namespace CurrencyApp
 
 	        var rowId = 1;
 
-	        foreach (var bankCurrencyValue in bankCurrencyRepository.GetBankCurrenciesInCurrentDateRange(dateFrom, dateTo))
+	        foreach (var bankCurrencyValue in bankCurrencyRepository.GetBankCurrenciesCollectionInDateRange(dateFrom, dateTo))
 	        {
 		        dt.Rows.Add(rowId++, bankCurrencyValue.Id, bankCurrencyValue.Currency.CurrencyName,
 			        bankCurrencyValue.UAHConvertation, bankCurrencyValue.CreationDate,

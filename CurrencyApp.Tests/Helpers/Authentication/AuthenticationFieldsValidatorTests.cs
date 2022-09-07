@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Security.Authentication;
 using CurrencyApp.Core;
 using CurrencyApp.Helpers;
@@ -44,4 +44,4 @@ namespace CurrencyApp.Tests.Helpers.Authentication
 			Assert.Null(exception);
 		}
 	}
-}
+}*/

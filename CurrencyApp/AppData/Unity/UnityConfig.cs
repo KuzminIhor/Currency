@@ -29,7 +29,7 @@ namespace CurrencyApp.AppData.Unity
 
 			//Register services
 			ServiceLocator.RegisterSingleton<IAuthenticationService, AuthenticationService>();
-			ServiceLocator.RegisterSingleton<IAddBankCurrencyService, AddBankCurrencyService>();
+			ServiceLocator.RegisterSingleton<IBankCurrencyService, BankCurrencyService>();
 			ServiceLocator.RegisterSingleton<IFormRedirectionService, FormRedirectionService>();
 
 

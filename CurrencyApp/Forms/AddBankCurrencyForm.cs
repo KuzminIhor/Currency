@@ -18,14 +18,14 @@ namespace CurrencyApp
 		private static AddBankCurrency _addBankCurrencyForm;
 		private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-		private readonly IAddBankCurrencyService addBankCurrencyService;
+		private readonly IBankCurrencyService addBankCurrencyService;
 		private readonly IFormRedirectionService formRedirectionService;
 
 		private readonly ICurrencyRepository currencyRepository;
 
 		private AddBankCurrency()
 		{
-			addBankCurrencyService = ServiceLocator.Get<IAddBankCurrencyService>();
+			addBankCurrencyService = ServiceLocator.Get<IBankCurrencyService>();
 			formRedirectionService = ServiceLocator.Get<IFormRedirectionService>();
 
 			currencyRepository = ServiceLocator.Get<ICurrencyRepository>();
@@ -64,19 +64,19 @@ namespace CurrencyApp
 				var formToRedirect = addBankCurrencyService.AddBankCurrency(currency, convertation);
 				formRedirectionService.Redirect(this, (FormType) formToRedirect);
 
-				_logger.Info("Курс валюти успішно доданий.");
+				_logger.Info($"Курс валюти успішно доданий користувачем {CurrentUser.GetInstance().Id}.");
 			}
-			catch (AddBankCurrencyException ex)
+			catch (BankCurrencyModifyException ex)
 			{
 				label1.Visible = true;
 				label1.Text = ex.Message;
-				_logger.Error($"ПОМИЛКА: {ex.Message}");
+				_logger.Error($"ПОМИЛКА під час додавання курсу валюти користувачем {CurrentUser.GetInstance().Id}: {ex.Message}");
 			}
 			catch (Exception ex)
 			{
 				label1.Visible = true;
 				label1.Text = "Сталась якась помилка";
-				_logger.Error($"ПОМИЛКА: {ex.Message}");
+				_logger.Error($"ПОМИЛКА під час додавання курсу валюти користувачем {CurrentUser.GetInstance().Id}: {ex.Message}");
 			}
 		}
 	}

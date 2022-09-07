@@ -8,18 +8,22 @@ namespace CurrencyApp.Helpers
 	{
 		public override object Handle(string userName, string password)
 		{
-			Validate(userName, password);
+			ValidateUserName(userName);
+			ValidatePassword(password);
 
 			return base.Handle(userName, password);
 		}
 
-		public void Validate(string userName, string password)
+		public void ValidateUserName(string userName)
 		{
 			if (string.IsNullOrEmpty(userName))
 			{
 				throw new AuthenticationException("Ви не ввели логін!\n");
 			}
+		}
 
+		public void ValidatePassword(string password)
+		{
 			if (string.IsNullOrEmpty(password))
 			{
 				throw new AuthenticationException("Ви не ввели пароль!\n");

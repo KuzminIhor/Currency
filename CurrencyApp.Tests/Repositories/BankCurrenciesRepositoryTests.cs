@@ -27,17 +27,17 @@ namespace CurrencyApp.Tests.Repositories
 		}
 
 		[Theory, AutoMoqData]
-		public void GetBankCurrenciesInCurrentDateRange_WhenDataNotExistsInDateRange_ThenReturnNoData()
+		public void GetBankCurrenciesCollectionInDateRange_WhenDataNotExistsInDateRange_ThenReturnNoData()
 		{
-			var result = bankCurrencyRepository.GetBankCurrenciesInCurrentDateRange(It.IsAny<DateTime>(), It.IsAny<DateTime>());
+			var result = bankCurrencyRepository.GetBankCurrenciesCollectionInDateRange(It.IsAny<DateTime>(), It.IsAny<DateTime>());
 
 			Assert.Equal(0, result.Count);
 		}
 
 		[Theory, AutoMoqData]
-		public void GetBankCurrenciesInCurrentDateRange_WhenDataExistsInDateRange_ThenReturnBankCurrencies()
+		public void GetBankCurrenciesCollectionInDateRange_WhenDataExistsInDateRange_ThenReturnBankCurrencies()
 		{
-			var result = bankCurrencyRepository.GetBankCurrenciesInCurrentDateRange(DateTime.Now, DateTime.Now.AddDays(1));
+			var result = bankCurrencyRepository.GetBankCurrenciesCollectionInDateRange(DateTime.Now, DateTime.Now.AddDays(1));
 
 			Assert.NotEqual(0, result.Count);
 		}

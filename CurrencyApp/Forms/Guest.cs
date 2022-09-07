@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Data;
-using System.Linq;
 using System.Windows.Forms;
-using Microsoft.EntityFrameworkCore;
 using CurrencyApp.Core;
 using CurrencyApp.Repositories.Interfaces;
 using NLog;

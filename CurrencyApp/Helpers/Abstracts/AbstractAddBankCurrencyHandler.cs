@@ -1,6 +1,4 @@
-﻿using System;
-using System.Windows.Forms;
-using CurrencyApp.Interfaces;
+﻿using CurrencyApp.Interfaces;
 
 namespace CurrencyApp.Model.Abstracts
 {

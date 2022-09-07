@@ -1,9 +1,5 @@
-﻿using System.Windows.Forms;
-using CurrencyApp.Core;
-using CurrencyApp.Helpers;
+﻿using CurrencyApp.Core;
 using CurrencyApp.Interfaces;
-using CurrencyApp.Model.Abstracts;
-using CurrencyApp.Model.Enums;
 using CurrencyApp.Model.Interfaces.Helpers;
 
 namespace CurrencyApp.Services

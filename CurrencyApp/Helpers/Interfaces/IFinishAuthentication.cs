@@ -1,5 +1,4 @@
-﻿using System.Windows.Forms;
-using CurrencyApp.Interfaces;
+﻿using CurrencyApp.Interfaces;
 using CurrencyApp.Model.Enums;
 
 namespace CurrencyApp.Model.Interfaces.Helpers

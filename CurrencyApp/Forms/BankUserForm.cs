@@ -2,7 +2,6 @@
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
-using Microsoft.EntityFrameworkCore;
 using CurrencyApp.Core;
 using CurrencyApp.Interfaces;
 using CurrencyApp.Model;
@@ -90,7 +89,7 @@ namespace CurrencyApp
 
         private void AddCurrencyButton_Click(object sender, EventArgs e)
 		{
-			formRedirectionService.Redirect(this, FormType.AddBankCurrency);
+			formRedirectionService.Redirect(this, FormType.AddBankCurrencyForm);
 		}
 
 		private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -148,6 +147,13 @@ namespace CurrencyApp
 			{
 				bankCurrencyService.UpdateBankCurrency(convertation, bankCurrencyId);
 				_logger.Info($"Курс валюти з ID {bankCurrencyId} було оновлено користувачем {CurrentUser.GetInstance().Id}");
+
+				label2.Visible = false;
+				button1.Visible = false;
+				textBox1.Visible = false;
+				label1.Visible = false;
+
+				FillTable();
 			}
 			catch (BankCurrencyModifyException ex)
 			{
@@ -161,13 +167,6 @@ namespace CurrencyApp
 				label2.Text = "Сталась якась помилка";
 				_logger.Error($"ПОМИЛКА при оновлені курсу валюти з ID {bankCurrencyId} користувачем {CurrentUser.GetInstance().Id}: {ex.Message}");
 			}
-
-			FillTable();
-
-			label2.Visible = false;
-			button1.Visible = false;
-			textBox1.Visible = false;
-			label1.Visible = false;
 		}
 	}
 }

@@ -1,21 +1,18 @@
 ﻿using System;
-using System.Linq;
 using System.Windows.Forms;
-using Microsoft.EntityFrameworkCore;
 using CurrencyApp.Core;
 using CurrencyApp.Interfaces;
 using CurrencyApp.Model;
 using CurrencyApp.Model.Enums;
 using CurrencyApp.Model.Exceptions;
-using CurrencyApp.Repositories;
 using CurrencyApp.Repositories.Interfaces;
 using NLog;
 
 namespace CurrencyApp
 {
-	public partial class AddBankCurrency : Form
+	public partial class AddBankCurrencyForm : Form
 	{
-		private static AddBankCurrency _addBankCurrencyForm;
+		private static AddBankCurrencyForm _addBankCurrencyForm;
 		private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
 		private readonly IBankCurrencyService addBankCurrencyService;
@@ -23,7 +20,7 @@ namespace CurrencyApp
 
 		private readonly ICurrencyRepository currencyRepository;
 
-		private AddBankCurrency()
+		private AddBankCurrencyForm()
 		{
 			addBankCurrencyService = ServiceLocator.Get<IBankCurrencyService>();
 			formRedirectionService = ServiceLocator.Get<IFormRedirectionService>();
@@ -36,11 +33,11 @@ namespace CurrencyApp
 			comboBox1.DisplayMember = "CurrencyName";
 		}
 
-		public static AddBankCurrency GetInstance()
+		public static AddBankCurrencyForm GetInstance()
 		{
 			if (_addBankCurrencyForm == null)
 			{
-				_addBankCurrencyForm = new AddBankCurrency();
+				_addBankCurrencyForm = new AddBankCurrencyForm();
 			}
 
 			return _addBankCurrencyForm;
@@ -61,7 +58,7 @@ namespace CurrencyApp
 
 			try
 			{
-				var formToRedirect = addBankCurrencyService.AddBankCurrency(currency, convertation);
+				var formToRedirect = addBankCurrencyService.AddBankCurrencyForm(currency, convertation);
 				formRedirectionService.Redirect(this, (FormType) formToRedirect);
 
 				_logger.Info($"Курс валюти успішно доданий користувачем {CurrentUser.GetInstance().Id}.");

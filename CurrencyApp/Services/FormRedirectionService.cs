@@ -22,8 +22,8 @@ namespace CurrencyApp.Services
 				case FormType.BankUserForm:
 					BankUserForm.GetInstance().Show();
 					break;
-				case FormType.AddBankCurrency:
-					AddBankCurrency.GetInstance().Show();
+				case FormType.AddBankCurrencyForm:
+					AddBankCurrencyForm.GetInstance().Show();
 					break;
 			}
 		}

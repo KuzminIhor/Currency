@@ -1,9 +1,4 @@
-﻿using System.Linq;
-using System.Security.Authentication;
-using System.Windows.Forms;
-using CurrencyApp.Core;
-using CurrencyApp.Model;
-using CurrencyApp.Model.Abstracts;
+﻿using CurrencyApp.Model.Abstracts;
 using CurrencyApp.Model.Enums;
 using CurrencyApp.Model.Interfaces.Helpers;
 

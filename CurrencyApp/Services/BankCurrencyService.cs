@@ -3,7 +3,6 @@ using CurrencyApp.Core;
 using CurrencyApp.Helpers.Interfaces;
 using CurrencyApp.Interfaces;
 using CurrencyApp.Model;
-using CurrencyApp.Model.Interfaces.Helpers;
 using CurrencyApp.Repositories.Interfaces;
 
 namespace CurrencyApp.Services
@@ -23,7 +22,7 @@ namespace CurrencyApp.Services
 			bankCurrencyRepository = ServiceLocator.Get<IBankCurrencyRepository>();
 		}
 
-		public object AddBankCurrency(Currency currency, string convertation)
+		public object AddBankCurrencyForm(Currency currency, string convertation)
 		{
 			validator.SetNext(addingProcess);
 

@@ -5,6 +5,6 @@
 		AdminForm,
 		BankUserForm,
 		GuestForm,
-		AddBankCurrency
+		AddBankCurrencyForm
 	}
 }

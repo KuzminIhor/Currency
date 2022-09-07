@@ -42,7 +42,7 @@ namespace CurrencyApp.Repositories
 				.FirstOrDefault(p => p.Id == bankCurrencyId);
 		}
 
-		public void AddBankCurrency(Currency currency, Bank bank, double uahConvertation)
+		public void AddBankCurrencyForm(Currency currency, Bank bank, double uahConvertation)
 		{
 			db.BankCurrencies.Add(new BankCurrency()
 			{

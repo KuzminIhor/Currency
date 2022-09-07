@@ -1,7 +1,7 @@
 ﻿
 namespace CurrencyApp
 {
-	partial class AddBankCurrency
+	partial class AddBankCurrencyForm
 	{
 		/// <summary>
 		/// Required designer variable.

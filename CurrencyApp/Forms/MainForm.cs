@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Linq;
 using System.Security.Authentication;
 using System.Windows.Forms;
-using Microsoft.EntityFrameworkCore;
 using CurrencyApp.Core;
 using CurrencyApp.Interfaces;
 using CurrencyApp.Model;
 using CurrencyApp.Model.Enums;
 using NLog;
-using CurrencyApp.Services;
-using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace CurrencyApp
 {
@@ -18,12 +14,12 @@ namespace CurrencyApp
 	    private static MainForm _mainForm;
 	    private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-	    private readonly IFormRedirection formRedirection;
+	    private readonly IFormRedirectionService formRedirectionService;
 	    private readonly IAuthenticationService authenticationService;
 
 	    private MainForm()
 	    {
-		    formRedirection = ServiceLocator.Get<IFormRedirection>();
+		    formRedirectionService = ServiceLocator.Get<IFormRedirectionService>();
 		    authenticationService = ServiceLocator.Get<IAuthenticationService>();
 
 	        InitializeComponent();	
@@ -49,7 +45,7 @@ namespace CurrencyApp
 			try
 			{
 				var formToRedirect = (FormType) authenticationService.Authenticate(userName, password);
-				formRedirection.Redirect(this, formToRedirect);
+				formRedirectionService.Redirect(this, formToRedirect);
 
 				var userType = CurrentUser.GetInstance().Id == 1 ? "Адмін" : "Банк";
 				_logger.Info($"Аутентифікація пройшла успішно. Тип користувача: {userType}");
@@ -73,7 +69,7 @@ namespace CurrencyApp
 			try
 			{
 				var formToRedirect = (FormType) authenticationService.AuthenticateGuest();
-				formRedirection.Redirect(this, formToRedirect);
+				formRedirectionService.Redirect(this, formToRedirect);
 				_logger.Info("Аутентифікація пройшла успішно. Тип користувача: Гість");
 			}
 			catch (Exception ex)

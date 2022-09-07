@@ -6,11 +6,11 @@ using CurrencyApp.Repositories.Interfaces;
 
 namespace CurrencyApp.Repositories
 {
-	public class CurrenciesRepository: ICurrenciesRepository
+	public class CurrencyRepository: ICurrencyRepository
 	{
 		public DBAppContext db { get; private set; }
 
-		public CurrenciesRepository(DBAppContext db)
+		public CurrencyRepository(DBAppContext db)
 		{
 			this.db = db;
 		}
@@ -18,6 +18,11 @@ namespace CurrencyApp.Repositories
 		public List<Currency> GetCurrencies()
 		{
 			return db.Currencies.ToList();
+		}
+
+		public Currency GetCurrencyById(int currencyId)
+		{
+			return db.Currencies.FirstOrDefault(c => c.Id == currencyId);
 		}
 	}
 }

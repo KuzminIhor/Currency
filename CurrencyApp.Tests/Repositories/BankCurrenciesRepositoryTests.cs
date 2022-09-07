@@ -8,12 +8,12 @@ using Xunit;
 
 namespace CurrencyApp.Tests.Repositories
 {
-	public class BankCurrenciesRepositoryTests
+	public class BankCurrencyRepositoryTests
 	{
 		private readonly DBAppContext _context;
-		private readonly BankCurrenciesRepository bankCurrenciesRepository;
+		private readonly BankCurrencyRepository bankCurrencyRepository;
 
-		public BankCurrenciesRepositoryTests()
+		public BankCurrencyRepositoryTests()
 		{
 			ServiceLocatorHelper.CreateUnityContainer();
 
@@ -23,13 +23,13 @@ namespace CurrencyApp.Tests.Repositories
 			DatabaseRecordsAddingService.AddTestBankCurrencies(_context);
 
 			ServiceLocator.RegisterSingleton(_context);
-			bankCurrenciesRepository = new BankCurrenciesRepository(_context);
+			bankCurrencyRepository = new BankCurrencyRepository(_context);
 		}
 
 		[Theory, AutoMoqData]
 		public void GetBankCurrenciesInCurrentDateRange_WhenDataNotExistsInDateRange_ThenReturnNoData()
 		{
-			var result = bankCurrenciesRepository.GetBankCurrenciesInCurrentDateRange(It.IsAny<DateTime>(), It.IsAny<DateTime>());
+			var result = bankCurrencyRepository.GetBankCurrenciesInCurrentDateRange(It.IsAny<DateTime>(), It.IsAny<DateTime>());
 
 			Assert.Equal(0, result.Count);
 		}
@@ -37,7 +37,7 @@ namespace CurrencyApp.Tests.Repositories
 		[Theory, AutoMoqData]
 		public void GetBankCurrenciesInCurrentDateRange_WhenDataExistsInDateRange_ThenReturnBankCurrencies()
 		{
-			var result = bankCurrenciesRepository.GetBankCurrenciesInCurrentDateRange(DateTime.Now, DateTime.Now.AddDays(1));
+			var result = bankCurrencyRepository.GetBankCurrenciesInCurrentDateRange(DateTime.Now, DateTime.Now.AddDays(1));
 
 			Assert.NotEqual(0, result.Count);
 		}

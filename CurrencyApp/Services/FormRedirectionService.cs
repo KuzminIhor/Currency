@@ -5,13 +5,8 @@ using CurrencyApp.Model.Enums;
 
 namespace CurrencyApp.Services
 {
-	public class FormRedirection : IFormRedirection
+	public class FormRedirectionService : IFormRedirectionService
 	{
-		public FormRedirection()
-		{
-
-		}
-
 		public void Redirect(Form oldForm, FormType newForm)
 		{
 			oldForm.Hide();

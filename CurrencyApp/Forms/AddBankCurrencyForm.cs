@@ -1,29 +1,39 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.EntityFrameworkCore;
 using CurrencyApp.Core;
+using CurrencyApp.Interfaces;
 using CurrencyApp.Model;
+using CurrencyApp.Model.Enums;
+using CurrencyApp.Model.Exceptions;
+using CurrencyApp.Repositories;
+using CurrencyApp.Repositories.Interfaces;
+using NLog;
 
 namespace CurrencyApp
 {
 	public partial class AddBankCurrency : Form
 	{
 		private static AddBankCurrency _addBankCurrencyForm;
+		private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
+		private readonly IAddBankCurrencyService addBankCurrencyService;
+		private readonly IFormRedirectionService formRedirectionService;
+
+		private readonly ICurrencyRepository currencyRepository;
+
 		private AddBankCurrency()
 		{
+			addBankCurrencyService = ServiceLocator.Get<IAddBankCurrencyService>();
+			formRedirectionService = ServiceLocator.Get<IFormRedirectionService>();
+
+			currencyRepository = ServiceLocator.Get<ICurrencyRepository>();
+
 			InitializeComponent();
-			using (DBAppContext db = new DBAppContext())
-			{
-				comboBox1.DataSource = db.Currencies.ToList();
-				comboBox1.DisplayMember = "CurrencyName";
-			}
+
+			comboBox1.DataSource = currencyRepository.GetCurrencies();
+			comboBox1.DisplayMember = "CurrencyName";
 		}
 
 		public static AddBankCurrency GetInstance()
@@ -38,60 +48,36 @@ namespace CurrencyApp
 
 		private void button2_Click(object sender, EventArgs e)
 		{
-			Form form = BankUserForm.GetInstance();
-			this.Hide();
-			form.Show();
+			formRedirectionService.Redirect(this, FormType.BankUserForm);
 		}
 
 		private void button1_Click(object sender, EventArgs e)
 		{
 			label1.Text = "";
 			label1.Visible = false;
+
 			var currency = comboBox1.SelectedItem as Currency;
 			var convertation = textBox1.Text.Trim();
 
-			if (currency == null)
+			try
 			{
-				label1.Text += "Ви не обрали валюту!\n";
-			}
+				var formToRedirect = addBankCurrencyService.AddBankCurrency(currency, convertation);
+				formRedirectionService.Redirect(this, (FormType) formToRedirect);
 
-			double result = 0;
-
-			if (string.IsNullOrEmpty(convertation))
-			{
-				label1.Text += "Ви не ввели курс валюти!\n";
+				_logger.Info("Курс валюти успішно доданий.");
 			}
-			else if (!Double.TryParse(convertation, out result))
-			{
-				label1.Text += "Курс валюти невалідний!\n";
-			}
-
-			if (!string.IsNullOrEmpty(label1.Text))
+			catch (AddBankCurrencyException ex)
 			{
 				label1.Visible = true;
-				return;
+				label1.Text = ex.Message;
+				_logger.Error($"ПОМИЛКА: {ex.Message}");
 			}
-
-			using (DBAppContext db = new DBAppContext())
+			catch (Exception ex)
 			{
-				var bankInDb = db.Users.Include(u => u.Bank).FirstOrDefault(u => u.Id == CurrentUser.GetInstance().Id)
-					.Bank;
-
-				var currencyInDb = db.Currencies.FirstOrDefault(c => c.Id == currency.Id);
-
-				db.BankCurrencies.Add(new BankCurrency()
-				{
-					Currency = currencyInDb,
-					Bank = bankInDb,
-					UAHConvertation = result
-				});
-
-				db.SaveChanges();
+				label1.Visible = true;
+				label1.Text = "Сталась якась помилка";
+				_logger.Error($"ПОМИЛКА: {ex.Message}");
 			}
-
-			Form form = BankUserForm.GetInstance();
-			this.Hide();
-			form.Show();
 		}
 	}
 }

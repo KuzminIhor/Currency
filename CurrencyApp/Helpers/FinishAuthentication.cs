@@ -11,13 +11,6 @@ namespace CurrencyApp.Helpers
 {
 	public class FinishAuthentication: AbstractAuthenticationHandler, IFinishAuthentication
 	{
-		private readonly DBAppContext db;
-
-		public FinishAuthentication(DBAppContext db)
-		{
-			this.db = db;
-		}
-
 		public override object Handle(string userName, string password)
 		{
 			var form = GetFormToRedirect(userName, password);
@@ -29,7 +22,9 @@ namespace CurrencyApp.Helpers
 			if (userName.Equals("guest"))
 			{
 				return FormType.GuestForm;
-			} else if (userName.Equals("admin"))
+			}
+			
+			if (userName.Equals("admin"))
 			{
 				return FormType.AdminForm;
 			}

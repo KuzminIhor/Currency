@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CurrencyApp.Core;
 using CurrencyApp.Helpers;
+using CurrencyApp.Helpers.Interfaces;
 using CurrencyApp.Interfaces;
 using CurrencyApp.Model.Abstracts;
 using CurrencyApp.Model.Interfaces.Helpers;
@@ -25,18 +26,27 @@ namespace CurrencyApp.AppData.Unity
 			var dbApp = new DBAppContext();
 			ServiceLocator.RegisterSingleton(dbApp);
 
+
 			//Register services
 			ServiceLocator.RegisterSingleton<IAuthenticationService, AuthenticationService>();
-			ServiceLocator.RegisterSingleton<IFormRedirection, FormRedirection>();
+			ServiceLocator.RegisterSingleton<IAddBankCurrencyService, AddBankCurrencyService>();
+			ServiceLocator.RegisterSingleton<IFormRedirectionService, FormRedirectionService>();
+
 
 			//Register helpers
 			ServiceLocator.RegisterSingleton<IAuthenticationFieldsValidator, AuthenticationFieldsValidator>();
 			ServiceLocator.RegisterSingleton<IAuthenticationProcess, AuthenticationProcess>();
 			ServiceLocator.RegisterSingleton<IFinishAuthentication, FinishAuthentication>();
 
+			ServiceLocator.RegisterSingleton<IBankCurrencyFieldsValidator, BankCurrencyFieldsValidator>();
+			ServiceLocator.RegisterSingleton<IAddBankCurrencyProcess, AddBankCurrencyProcess>();
+
+
 			//Register repositories
 			ServiceLocator.RegisterSingleton<IUserRepository, UserRepository>();
-			ServiceLocator.RegisterSingleton<IBankCurrenciesRepository, BankCurrenciesRepository>();
+			ServiceLocator.RegisterSingleton<IBankCurrencyRepository, BankCurrencyRepository>();
+			ServiceLocator.RegisterSingleton<ICurrencyRepository, CurrencyRepository>();
+			ServiceLocator.RegisterSingleton<IBankRepository, BankRepository>();
 		}
 	}
 }

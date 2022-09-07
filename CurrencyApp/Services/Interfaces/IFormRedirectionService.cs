@@ -3,7 +3,7 @@ using CurrencyApp.Model.Enums;
 
 namespace CurrencyApp.Interfaces
 {
-	public interface IFormRedirection
+	public interface IFormRedirectionService
 	{
 		public void Redirect(Form oldForm, FormType newForm);
 	}

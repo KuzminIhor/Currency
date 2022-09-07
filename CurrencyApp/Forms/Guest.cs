@@ -14,11 +14,11 @@ namespace CurrencyApp
 	    private static GuestForm _guestForm;
 	    private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-	    private readonly IBankCurrenciesRepository bankCurrenciesRepository;
+	    private readonly IBankCurrencyRepository bankCurrencyRepository;
 
 		private GuestForm()
 		{
-			this.bankCurrenciesRepository = ServiceLocator.Get<IBankCurrenciesRepository>();
+			this.bankCurrencyRepository = ServiceLocator.Get<IBankCurrencyRepository>();
 
             InitializeComponent();
         }
@@ -53,7 +53,7 @@ namespace CurrencyApp
 
 	        var rowId = 1;
 
-	        foreach (var bankCurrencyValue in bankCurrenciesRepository.GetBankCurrenciesInCurrentDateRange(dateFrom, dateTo))
+	        foreach (var bankCurrencyValue in bankCurrencyRepository.GetBankCurrenciesInCurrentDateRange(dateFrom, dateTo))
 	        {
 		        dt.Rows.Add(rowId++, bankCurrencyValue.Id, bankCurrencyValue.Currency.CurrencyName,
 			        bankCurrencyValue.UAHConvertation, bankCurrencyValue.CreationDate,

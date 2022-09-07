@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CurrencyApp.Repositories
 {
-	public class BankCurrenciesRepository: IBankCurrenciesRepository
+	public class BankCurrencyRepository: IBankCurrencyRepository
 	{
-		public DBAppContext db { get; private set; }
+		public readonly DBAppContext db;
 
-		public BankCurrenciesRepository(DBAppContext db)
+		public BankCurrencyRepository(DBAppContext db)
 		{
 			this.db = db;
 		}
@@ -24,6 +24,18 @@ namespace CurrencyApp.Repositories
 				.Include(bc => bc.Currency)
 				.Include(bc => bc.Bank)
 				.Where(bc => bc.CreationDate <= dateTo && bc.CreationDate >= dateFrom).ToList();
+		}
+
+		public void AddBankCurrency(Currency currency, Bank bank, double uahConvertation)
+		{
+			db.BankCurrencies.Add(new BankCurrency()
+			{
+				Currency = currency,
+				Bank = bank,
+				UAHConvertation = uahConvertation
+			});
+
+			db.SaveChanges();
 		}
 	}
 }

@@ -6,11 +6,6 @@ namespace CurrencyApp.Helpers
 {
 	public class AuthenticationFieldsValidator: AbstractAuthenticationHandler, IAuthenticationFieldsValidator
 	{
-		public AuthenticationFieldsValidator()
-		{
-
-		}
-
 		public override object Handle(string userName, string password)
 		{
 			Validate(userName, password);

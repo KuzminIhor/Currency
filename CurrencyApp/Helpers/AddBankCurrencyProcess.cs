@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Linq;
 using CurrencyApp.Core;
 using CurrencyApp.Helpers.Interfaces;
-using CurrencyApp.Interfaces;
 using CurrencyApp.Model;
 using CurrencyApp.Model.Abstracts;
 using CurrencyApp.Model.Enums;
 using CurrencyApp.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace CurrencyApp.Helpers
 {
@@ -36,7 +33,7 @@ namespace CurrencyApp.Helpers
 			var bankInDb = bankRepository.GetBankByUserId(CurrentUser.GetInstance().Id);
 			var currencyInDb = currencyRepository.GetCurrencyById(currency.Id);
 
-			bankCurrencyRepository.AddBankCurrency(currencyInDb, bankInDb, Convert.ToDouble(convertation));
+			bankCurrencyRepository.AddBankCurrencyForm(currencyInDb, bankInDb, Convert.ToDouble(convertation));
 		}
 	}
 }

@@ -5,6 +5,7 @@ namespace CurrencyApp.Helpers.Interfaces
 {
 	public interface IBankCurrencyFieldsValidator: IAddBankCurrencyHandler
 	{
-		public void Validate(Currency currency, string convertation);
+		public void ValidateCurrency(Currency currency);
+		public void ValidateConvertation(string convertation);
 	}
 }

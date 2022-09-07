@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Data;
-using System.Linq;
 using System.Windows.Forms;
-using Microsoft.EntityFrameworkCore;
 using CurrencyApp.Core;
 using CurrencyApp.Repositories.Interfaces;
 using NLog;
@@ -53,7 +51,7 @@ namespace CurrencyApp
 
 	        var rowId = 1;
 
-	        foreach (var bankCurrencyValue in bankCurrencyRepository.GetBankCurrenciesInCurrentDateRange(dateFrom, dateTo))
+	        foreach (var bankCurrencyValue in bankCurrencyRepository.GetBankCurrenciesCollectionInDateRange(dateFrom, dateTo))
 	        {
 		        dt.Rows.Add(rowId++, bankCurrencyValue.Id, bankCurrencyValue.Currency.CurrencyName,
 			        bankCurrencyValue.UAHConvertation, bankCurrencyValue.CreationDate,

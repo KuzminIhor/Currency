@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices;
-
-namespace CurrencyApp.Model
+﻿namespace CurrencyApp.Model
 {
 	public class CurrentUser
 	{

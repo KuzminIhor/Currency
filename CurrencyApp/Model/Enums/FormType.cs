@@ -4,6 +4,7 @@
 	{
 		AdminForm,
 		BankUserForm,
-		GuestForm
+		GuestForm,
+		AddBankCurrencyForm
 	}
 }

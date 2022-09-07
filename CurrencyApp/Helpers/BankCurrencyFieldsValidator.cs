@@ -10,26 +10,30 @@ namespace CurrencyApp.Helpers
 	{
 		public override object Handle(Currency currency, string convertation)
 		{
-			Validate(currency, convertation);
+			ValidateCurrency(currency);
+			ValidateConvertation(convertation);
 
 			return base.Handle(currency, convertation);
 		}
 
-		public void Validate(Currency currency, string convertation)
+		public void ValidateConvertation(string convertation)
 		{
-			if (currency == null)
-			{
-				throw new AddBankCurrencyException("Ви не обрали валюту!");
-			}
-
 			if (string.IsNullOrEmpty(convertation))
 			{
-				throw new AddBankCurrencyException("Ви не ввели курс валюти!");
+				throw new BankCurrencyModifyException("Ви не ввели курс валюти!");
 			}
 			
 			if (!Double.TryParse(convertation, out _))
 			{
-				throw new AddBankCurrencyException("Курс валюти невалідний!");
+				throw new BankCurrencyModifyException("Курс валюти невалідний!");
+			}
+		}
+
+		public void ValidateCurrency(Currency currency)
+		{
+			if (currency == null)
+			{
+				throw new BankCurrencyModifyException("Ви не обрали валюту!");
 			}
 		}
 	}

@@ -10,7 +10,7 @@ namespace CurrencyApp.Repositories
 {
 	public class BankCurrencyRepository: IBankCurrencyRepository
 	{
-		public DBAppContext db { get; private set; }
+		public readonly DBAppContext db;
 
 		public BankCurrencyRepository(DBAppContext db)
 		{

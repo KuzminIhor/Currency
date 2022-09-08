@@ -15,14 +15,14 @@ namespace CurrencyApp
 		private static AddBankCurrencyForm _addBankCurrencyForm;
 		private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-		private readonly IBankCurrencyService addBankCurrencyService;
+		private readonly IBankCurrencyService bankCurrencyService;
 		private readonly IFormRedirectionService formRedirectionService;
 
 		private readonly ICurrencyRepository currencyRepository;
 
 		private AddBankCurrencyForm()
 		{
-			addBankCurrencyService = ServiceLocator.Get<IBankCurrencyService>();
+			bankCurrencyService = ServiceLocator.Get<IBankCurrencyService>();
 			formRedirectionService = ServiceLocator.Get<IFormRedirectionService>();
 
 			currencyRepository = ServiceLocator.Get<ICurrencyRepository>();
@@ -58,7 +58,7 @@ namespace CurrencyApp
 
 			try
 			{
-				var formToRedirect = addBankCurrencyService.AddBankCurrencyForm(currency, convertation);
+				var formToRedirect = bankCurrencyService.AddBankCurrency(currency, convertation);
 				formRedirectionService.Redirect(this, (FormType) formToRedirect);
 
 				_logger.Info($"Курс валюти успішно доданий користувачем {CurrentUser.GetInstance().Id}.");

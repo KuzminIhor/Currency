@@ -22,7 +22,7 @@ namespace CurrencyApp.Services
 			bankCurrencyRepository = ServiceLocator.Get<IBankCurrencyRepository>();
 		}
 
-		public object AddBankCurrencyForm(Currency currency, string convertation)
+		public object AddBankCurrency(Currency currency, string convertation)
 		{
 			validator.SetNext(addingProcess);
 

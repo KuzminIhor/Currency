@@ -31,10 +31,11 @@ namespace CurrencyApp
 
 		private AdminForm()
 		{
+			renderBank = ServiceLocator.Get<IRenderDataTableRows>(nameof(RenderBankDataTableRowsService));
+			renderUser = ServiceLocator.Get<IRenderDataTableRows>(nameof(RenderUserDataTableRowsService));
+			renderCurrency = ServiceLocator.Get<IRenderDataTableRows>(nameof(RenderCurrencyDataTableRowsService));
+
 			InitializeComponent();
-			renderBank = new RenderBank();
-			renderUser = new RenderUser();
-			renderCurrency = new RenderCurrency();
 
 			FillDataTables();
 		}
@@ -63,6 +64,7 @@ namespace CurrencyApp
 		private void FillUsers()
 		{
 			dataGridView1.Columns.Clear();
+
 			usersDataTable = new DataTable();
 			usersDataTable.Columns.Add("RowId");
 			usersDataTable.Columns.Add("Id");

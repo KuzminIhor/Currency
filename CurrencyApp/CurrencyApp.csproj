@@ -301,9 +301,9 @@
     <Compile Include="Services\BankCurrencyService.cs" />
     <Compile Include="Services\AuthenticationService.cs" />
     <Compile Include="Services\FormRedirectionService.cs" />
-    <Compile Include="Services\RenderBank.cs" />
-    <Compile Include="Services\RenderCurrency.cs" />
-    <Compile Include="Services\RenderUser.cs" />
+    <Compile Include="Services\RenderBankDataTableRowsService.cs" />
+    <Compile Include="Services\RenderCurrencyDataTableRowsService.cs" />
+    <Compile Include="Services\RenderUserDataTableRowsService.cs" />
     <Compile Include="Forms\AdminForm.cs">
       <SubType>Form</SubType>
     </Compile>

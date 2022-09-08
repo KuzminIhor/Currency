@@ -1,7 +1,13 @@
-﻿using CurrencyApp.Core;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using CurrencyApp.Core;
 using CurrencyApp.Helpers;
 using CurrencyApp.Helpers.Interfaces;
 using CurrencyApp.Interfaces;
+using CurrencyApp.Model.Abstracts;
 using CurrencyApp.Model.Interfaces.Helpers;
 using CurrencyApp.Repositories;
 using CurrencyApp.Repositories.Interfaces;
@@ -25,6 +31,10 @@ namespace CurrencyApp.AppData.Unity
 			ServiceLocator.RegisterSingleton<IAuthenticationService, AuthenticationService>();
 			ServiceLocator.RegisterSingleton<IBankCurrencyService, BankCurrencyService>();
 			ServiceLocator.RegisterSingleton<IFormRedirectionService, FormRedirectionService>();
+
+			ServiceLocator.RegisterSingleton<IRenderDataTableRows, RenderUserDataTableRowsService>(nameof(RenderUserDataTableRowsService));
+			ServiceLocator.RegisterSingleton<IRenderDataTableRows, RenderCurrencyDataTableRowsService>(nameof(RenderCurrencyDataTableRowsService));
+			ServiceLocator.RegisterSingleton<IRenderDataTableRows, RenderBankDataTableRowsService>(nameof(RenderBankDataTableRowsService));
 
 
 			//Register helpers

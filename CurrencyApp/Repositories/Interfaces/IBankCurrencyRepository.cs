@@ -12,5 +12,6 @@ namespace CurrencyApp.Repositories.Interfaces
 		public void AddBankCurrencyForm(Currency currency, Bank bank, double uahConvertation);
 		public void UpdateBankCurrency(BankCurrency bankCurrency);
 		public void RemoveBankCurrency(BankCurrency bankCurrency);
+		public void RemoveBankCurrencies(List<BankCurrency> bankCurrencies);
 	}
 }

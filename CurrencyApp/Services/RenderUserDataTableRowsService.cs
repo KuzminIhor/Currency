@@ -15,11 +15,10 @@ namespace CurrencyApp.Helpers
 		{
 			userRepository = ServiceLocator.Get<IUserRepository>();
 		}
-
+		
 		public void GetRows(DataTable dt)
 		{
-
-			var users = userRepository.GetUsersExceptAdminAndGuest();
+			var users = userRepository.GetUsersCollectionExceptAdminAndGuest();
 			var rowId = 1;
 
 			foreach (var user in users)

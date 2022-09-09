@@ -65,5 +65,11 @@ namespace CurrencyApp.Repositories
 			db.BankCurrencies.Remove(bankCurrency);
 			db.SaveChanges();
 		}
+
+		public void RemoveBankCurrencies(List<BankCurrency> bankCurrencies)
+		{
+			db.BankCurrencies.RemoveRange(bankCurrencies);
+			db.SaveChanges();
+		}
 	}
 }

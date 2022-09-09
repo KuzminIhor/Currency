@@ -21,10 +21,33 @@ namespace CurrencyApp.Repositories
 			return db.Banks.ToList();
 		}
 
-		public Bank GetBankByUserId(int userId)
+		public Bank GetBank(int bankId)
+		{
+			return db.Banks.FirstOrDefault(b => b.Id == bankId);
+		}
+
+		public Bank GetBankByUser(int userId)
 		{
 			return db.Users.Include(u => u.Bank).FirstOrDefault(u => u.Id == userId)
 				.Bank;
+		}
+
+		public void AddBank(Bank bank)
+		{
+			db.Banks.Add(bank);
+			db.SaveChanges();
+		}
+
+		public void UpdateBank(Bank bank)
+		{
+			db.Banks.Update(bank);
+			db.SaveChanges();
+		}
+
+		public void RemoveBank(Bank bank)
+		{
+			db.Banks.Remove(bank);
+			db.SaveChanges();
 		}
 	}
 }

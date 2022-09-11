@@ -8,7 +8,7 @@ using CurrencyApp.Repositories.Interfaces;
 
 namespace CurrencyApp.Helpers
 {
-	public class AddBankCurrencyProcess: AbstractAddBankCurrencyHandler, IAddBankCurrencyProcess
+	public class AddBankCurrencyProcess: AbstractBankCurrencyHandler, IAddBankCurrencyProcess
 	{
 		private readonly IBankRepository bankRepository;
 		private readonly ICurrencyRepository currencyRepository;
@@ -21,7 +21,7 @@ namespace CurrencyApp.Helpers
 			bankCurrencyRepository = ServiceLocator.Get<IBankCurrencyRepository>();
 		}
 
-		public override object Handle(Currency currency, string convertation)
+		public override object AddBankCurrencyHandle(Currency currency, string convertation)
 		{
 			Add(currency, convertation);
 
@@ -30,8 +30,8 @@ namespace CurrencyApp.Helpers
 
 		public void Add(Currency currency, string convertation)
 		{
-			var bankInDb = bankRepository.GetBankByUserId(CurrentUser.GetInstance().Id);
-			var currencyInDb = currencyRepository.GetCurrencyById(currency.Id);
+			var bankInDb = bankRepository.GetBankByUser(CurrentUser.GetInstance().Id);
+			var currencyInDb = currencyRepository.GetCurrency(currency.Id);
 
 			bankCurrencyRepository.AddBankCurrencyForm(currencyInDb, bankInDb, Convert.ToDouble(convertation));
 		}

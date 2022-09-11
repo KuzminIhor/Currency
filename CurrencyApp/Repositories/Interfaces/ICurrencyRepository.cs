@@ -6,6 +6,9 @@ namespace CurrencyApp.Repositories.Interfaces
 	public interface ICurrencyRepository
 	{
 		public List<Currency> GetCurrencies();
-		public Currency GetCurrencyById(int currencyId);
+		public Currency GetCurrency(int currencyId);
+		public void AddCurrency(Currency currency);
+		public void UpdateCurrency(Currency currency);
+		public void RemoveCurrency(Currency currency);
 	}
 }

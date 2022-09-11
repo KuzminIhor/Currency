@@ -1,5 +1,4 @@
-﻿using System;
-using CurrencyApp.Core;
+﻿using CurrencyApp.Core;
 using CurrencyApp.Helpers.Interfaces;
 using CurrencyApp.Interfaces;
 using CurrencyApp.Model;
@@ -11,6 +10,7 @@ namespace CurrencyApp.Services
 	{
 		private readonly IBankCurrencyFieldsValidator validator;
 		private readonly IAddBankCurrencyProcess addingProcess;
+		private readonly IUpdateBankCurrencyProcess updatingProcess;
 
 		private readonly IBankCurrencyRepository bankCurrencyRepository;
 
@@ -18,6 +18,7 @@ namespace CurrencyApp.Services
 		{
 			validator = ServiceLocator.Get<IBankCurrencyFieldsValidator>();
 			addingProcess = ServiceLocator.Get<IAddBankCurrencyProcess>();
+			updatingProcess = ServiceLocator.Get<IUpdateBankCurrencyProcess>();
 
 			bankCurrencyRepository = ServiceLocator.Get<IBankCurrencyRepository>();
 		}
@@ -26,18 +27,14 @@ namespace CurrencyApp.Services
 		{
 			validator.SetNext(addingProcess);
 
-			return validator.Handle(currency, convertation);
+			return validator.AddBankCurrencyHandle(currency, convertation);
 		}
 
-		public void UpdateBankCurrency(string convertation, int bankCurrencyId)
+		public void UpdateBankCurrency(int bankCurrencyId, string convertation)
 		{
-			validator.ValidateConvertation(convertation);
+			validator.SetNext(updatingProcess);
 
-			var bankCurrency = bankCurrencyRepository.GetBankCurrency(bankCurrencyId);
-			bankCurrency.UAHConvertation = Convert.ToDouble(convertation);
-			bankCurrency.ModificationDate = DateTime.Now;
-
-			bankCurrencyRepository.UpdateBankCurrency(bankCurrency);
+			validator.UpdateBankCurrencyHandle(bankCurrencyId, convertation);
 		}
 
 		public void RemoveBankCurrency(int bankCurrencyId)

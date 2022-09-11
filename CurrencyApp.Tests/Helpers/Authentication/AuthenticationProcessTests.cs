@@ -19,7 +19,7 @@ namespace CurrencyApp.Tests.Helpers.Authentication
 			[Frozen] Mock<IUserRepository> userRepositoryMock,
 			AuthenticationProcess authenticationProcess)
 		{
-			userRepositoryMock.Setup(u => u.GetByUserName(It.IsAny<string>())).Returns(null as User);
+			userRepositoryMock.Setup(u => u.GetUser(It.IsAny<string>())).Returns(null as User);
 
 			Assert.Throws<AuthenticationException>(() => authenticationProcess.Authenticate(It.IsAny<string>(), It.IsAny<string>()));
 		}
@@ -31,7 +31,7 @@ namespace CurrencyApp.Tests.Helpers.Authentication
 		{
 			User user = new User();
 
-			userRepositoryMock.Setup(u => u.GetByUserName(It.IsAny<string>())).Returns(user);
+			userRepositoryMock.Setup(u => u.GetUser(It.IsAny<string>())).Returns(user);
 			userRepositoryMock.Setup(u => u.IsCorrectPassword(user.Id, It.IsAny<string>())).Returns(false);
 
 			Assert.Throws<AuthenticationException>(() => authenticationProcess.Authenticate(It.IsAny<string>(), It.IsAny<string>()));
@@ -44,7 +44,7 @@ namespace CurrencyApp.Tests.Helpers.Authentication
 		{
 			User user = new User();
 
-			userRepositoryMock.Setup(u => u.GetByUserName(It.IsAny<string>())).Returns(user);
+			userRepositoryMock.Setup(u => u.GetUser(It.IsAny<string>())).Returns(user);
 			userRepositoryMock.Setup(u => u.IsCorrectPassword(user.Id, It.IsAny<string>())).Returns(true);
 
 			authenticationProcess.Authenticate(It.IsAny<string>(), It.IsAny<string>());

@@ -1,5 +1,4 @@
-﻿using System.Data.OleDb;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using CurrencyApp.Interfaces;
 using CurrencyApp.Model.Enums;
 

@@ -6,14 +6,21 @@ using CurrencyApp.Model.Exceptions;
 
 namespace CurrencyApp.Helpers
 {
-	public class BankCurrencyFieldsValidator: AbstractAddBankCurrencyHandler, IBankCurrencyFieldsValidator
+	public class BankCurrencyFieldsValidator: AbstractBankCurrencyHandler, IBankCurrencyFieldsValidator
 	{
-		public override object Handle(Currency currency, string convertation)
+		public override object AddBankCurrencyHandle(Currency currency, string convertation)
 		{
 			ValidateCurrency(currency);
 			ValidateConvertation(convertation);
 
-			return base.Handle(currency, convertation);
+			return base.AddBankCurrencyHandle(currency, convertation);
+		}
+
+		public override void UpdateBankCurrencyHandle(int bankCurerncyId, string convertation)
+		{
+			ValidateConvertation(convertation);
+
+			base.UpdateBankCurrencyHandle(bankCurerncyId, convertation);
 		}
 
 		public void ValidateConvertation(string convertation)

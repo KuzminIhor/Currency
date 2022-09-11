@@ -1,5 +1,4 @@
 ﻿using System.Data;
-using System.Linq;
 using CurrencyApp.Core;
 using CurrencyApp.Interfaces;
 using CurrencyApp.Repositories.Interfaces;

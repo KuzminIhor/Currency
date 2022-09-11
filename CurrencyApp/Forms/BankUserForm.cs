@@ -60,7 +60,7 @@ namespace CurrencyApp
 	        dt.Columns.Add("Змінена у курсі валют у");
 	        dt.Columns.Add("Ваш Банк");
 
-	        var bankIdInDb = bankRepository.GetBankByUserId(CurrentUser.GetInstance().Id).Id;
+	        var bankIdInDb = bankRepository.GetBankByUser(CurrentUser.GetInstance().Id).Id;
 	        var rowId = 1;
 
 	        foreach (var bankCurrencyValue in bankCurrencyRepository.GetBankCurrenciesCollection(bankIdInDb))
@@ -145,7 +145,7 @@ namespace CurrencyApp
 
 			try
 			{
-				bankCurrencyService.UpdateBankCurrency(convertation, bankCurrencyId);
+				bankCurrencyService.UpdateBankCurrency(bankCurrencyId, convertation);
 				_logger.Info($"Курс валюти з ID {bankCurrencyId} було оновлено користувачем {CurrentUser.GetInstance().Id}");
 
 				label2.Visible = false;

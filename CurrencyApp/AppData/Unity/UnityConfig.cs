@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CurrencyApp.Core;
+﻿using CurrencyApp.Core;
 using CurrencyApp.Helpers;
 using CurrencyApp.Helpers.Interfaces;
 using CurrencyApp.Interfaces;
-using CurrencyApp.Model.Abstracts;
 using CurrencyApp.Model.Interfaces.Helpers;
 using CurrencyApp.Repositories;
 using CurrencyApp.Repositories.Interfaces;

@@ -1,6 +1,4 @@
 ﻿using System.Data;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
 using CurrencyApp.Core;
 using CurrencyApp.Interfaces;
 using CurrencyApp.Repositories.Interfaces;

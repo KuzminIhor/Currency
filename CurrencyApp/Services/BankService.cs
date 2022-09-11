@@ -1,9 +1,6 @@
-﻿using System.Windows.Forms;
-using CurrencyApp.Core;
+﻿using CurrencyApp.Core;
 using CurrencyApp.Helpers.Interfaces;
 using CurrencyApp.Interfaces;
-using CurrencyApp.Model;
-using CurrencyApp.Repositories;
 using CurrencyApp.Repositories.Interfaces;
 
 namespace CurrencyApp.Services

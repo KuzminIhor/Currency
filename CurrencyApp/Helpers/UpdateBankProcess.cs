@@ -1,5 +1,4 @@
-﻿using System;
-using CurrencyApp.Core;
+﻿using CurrencyApp.Core;
 using CurrencyApp.Helpers.Interfaces;
 using CurrencyApp.Model.Abstracts;
 using CurrencyApp.Repositories.Interfaces;

@@ -31,7 +31,7 @@ namespace CurrencyApp.Helpers
 		public void Add(Currency currency, string convertation)
 		{
 			var bankInDb = bankRepository.GetBankByUser(CurrentUser.GetInstance().Id);
-			var currencyInDb = currencyRepository.GetCurrencyById(currency.Id);
+			var currencyInDb = currencyRepository.GetCurrency(currency.Id);
 
 			bankCurrencyRepository.AddBankCurrencyForm(currencyInDb, bankInDb, Convert.ToDouble(convertation));
 		}

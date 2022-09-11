@@ -34,6 +34,14 @@ namespace CurrencyApp.Repositories
 				.Where(bc => bc.Bank.Id == bankId).ToList();
 		}
 
+		public List<BankCurrency> GetBankCurrenciesCollectionByCurrency(int currencyId)
+		{
+			return db.BankCurrencies
+				.Include(bc => bc.Bank)
+				.Include(bc => bc.Currency)
+				.Where(bc => bc.Currency.Id == currencyId).ToList();
+		}
+
 		public BankCurrency GetBankCurrency(int bankCurrencyId)
 		{
 			return db.BankCurrencies

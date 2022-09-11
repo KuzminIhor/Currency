@@ -29,6 +29,7 @@ namespace CurrencyApp
 		private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
 		private readonly IBankService bankService;
+		private readonly ICurrencyService currencyService;
 
 		private readonly IRenderDataTableRows renderBank;
 		private readonly IRenderDataTableRows renderUser;
@@ -43,6 +44,7 @@ namespace CurrencyApp
 		private AdminForm()
 		{
 			bankService = ServiceLocator.Get<IBankService>();
+			currencyService = ServiceLocator.Get<ICurrencyService>();
 
 			renderBank = ServiceLocator.Get<IRenderDataTableRows>(nameof(RenderBankDataTableRowsService));
 			renderUser = ServiceLocator.Get<IRenderDataTableRows>(nameof(RenderUserDataTableRowsService));
@@ -172,12 +174,10 @@ namespace CurrencyApp
 			button10.Visible = true;
 			button10.Text = "Додати";
 
-			using (DBAppContext db = new DBAppContext())
-			{
-				comboBox1.Visible = true;
-				comboBox1.DataSource = db.Banks.ToList();
-				comboBox1.DisplayMember = "BankName";
-			}
+
+			comboBox1.Visible = true;
+			comboBox1.DataSource = bankRepository.GetBanks();
+			comboBox1.DisplayMember = "BankName";
 		}
 
 		private void button10_Click(object sender, EventArgs e)
@@ -349,29 +349,52 @@ namespace CurrencyApp
 		{
 			var currencyName = textBox3.Text.Trim();
 
-			if (string.IsNullOrEmpty(currencyName))
+			if (button8.Text.Equals("Додати"))
 			{
-				MessageBox.Show("Ви не ввели валюту!");
-				return;
-			}
-
-			using (DBAppContext db = new DBAppContext())
-			{
-				if (button8.Text.Equals("Додати"))
+				try
 				{
-					db.Currencies.Add(new Currency()
-					{
-						CurrencyName = currencyName
-					});
-				} else if (button8.Text.Equals("Оновити"))
-				{
-					var currency = db.Currencies.FirstOrDefault(u => u.Id == Convert.ToInt32(label7.Text));
-					currency.CurrencyName = currencyName;
+					currencyService.AddCurrency(currencyName);
 
-					db.Currencies.Update(currency);
+					_logger.Info($"Валюта з іменем {currencyName} була додана адміністратором.");
 				}
-				
-				db.SaveChanges();
+				catch (CurrencyModifyException ex)
+				{
+					MessageBox.Show(ex.Message);
+
+					_logger.Error(
+						$"ПОМИЛКА під час додавання валюти з іменем {currencyName} адміністратором: {ex.Message}");
+
+					return;
+				}
+				catch (Exception ex)
+				{
+					_logger.Error(
+						$"ПОМИЛКА під час додавання валюти з іменем {currencyName} адміністратором: {ex.Message}");
+				}
+			}
+			else if (button8.Text.Equals("Оновити"))
+			{
+				try
+				{
+					currencyService.UpdateCurrency(Convert.ToInt32(label7.Text), currencyName);
+
+					_logger.Info(
+						$"Валюта з ID {Convert.ToInt32(label7.Text)} була оновлена адміністратором. Нове ім'я - {currencyName}.");
+				}
+				catch (CurrencyModifyException ex)
+				{
+					MessageBox.Show(ex.Message);
+
+					_logger.Error(
+						$"ПОМИЛКА під час оновлення валюти з ID {Convert.ToInt32(label7.Text)} адміністратором: {ex.Message}");
+
+					return;
+				}
+				catch (Exception ex)
+				{
+					_logger.Error(
+						$"ПОМИЛКА під час оновлення валюти з ID {Convert.ToInt32(label7.Text)} адміністратором: {ex.Message}");
+				}
 			}
 
 			FillDataTables();
@@ -499,43 +522,48 @@ namespace CurrencyApp
 			{
 				if (e.ColumnIndex == dataGridView3.Columns["Видалити"].Index)
 				{
-					DialogResult dr1 = MessageBox.Show("Ви хочете видалити валюту?\nУВАГА: При видаленні валюти будуть видалені всі курси валют, які до неї відносяться", "Підтвердження", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Information);
+					DialogResult dr1 =
+						MessageBox.Show(
+							"Ви хочете видалити валюту?\nУВАГА: При видаленні валюти будуть видалені всі курси валют, які до неї відносяться",
+							"Підтвердження", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Information);
 					if (dr1 == DialogResult.Yes)
-					{
-						using (DBAppContext db = new DBAppContext())
-						{
-							DataRow[] dr = currenciesDataTable.Select("ROWID = " + (e.RowIndex + 1));
-							var currencyId = Convert.ToInt32(dr[0].ItemArray[1]);
-							var currency = db.Currencies.ToList().FirstOrDefault(p => p.Id == currencyId);
-
-							var bankCurrencies = db.BankCurrencies.Include(bc => bc.Currency).Include(bc => bc.Bank)
-								.Where(bc => bc.Currency.Id == currencyId).ToList();
-							db.BankCurrencies.RemoveRange(bankCurrencies);
-
-							db.Currencies.Remove(currency);
-							db.SaveChanges();
-
-							FillDataTables();
-						}
-					}
-				} else if (e.ColumnIndex == dataGridView3.Columns["Оновити"].Index)
-				{
-					using (DBAppContext db = new DBAppContext())
 					{
 						DataRow[] dr = currenciesDataTable.Select("ROWID = " + (e.RowIndex + 1));
 						var currencyId = Convert.ToInt32(dr[0].ItemArray[1]);
-						var currency = db.Currencies.ToList().FirstOrDefault(p => p.Id == currencyId);
 
-						label3.Visible = true;
-						textBox3.Visible = true;
-						button8.Visible = true;
-						button3.Visible = true;
+						try
+						{
+							currencyService.RemoveCurrency(currencyId);
 
-						label6.Text = currencyId.ToString();
-						textBox3.Text = currency.CurrencyName;
-						label7.Text = currencyId.ToString();
-						button8.Text = "Оновити";
+							_logger.Info(
+								$"Валюта з ID {currencyId} була видалена адміністратором разом із курсами валют, які до неї відносяться.");
+						}
+						catch (Exception ex)
+						{
+							_logger.Error($"ПОМИЛКА при видаленні валюти з ID {currencyId}: {ex.Message}");
+
+							return;
+						}
+
+						FillDataTables();
 					}
+				}
+				else if (e.ColumnIndex == dataGridView3.Columns["Оновити"].Index)
+				{
+
+					DataRow[] dr = currenciesDataTable.Select("ROWID = " + (e.RowIndex + 1));
+					var currencyId = Convert.ToInt32(dr[0].ItemArray[1]);
+					var currency = currencyRepository.GetCurrency(currencyId);
+
+					label3.Visible = true;
+					textBox3.Visible = true;
+					button8.Visible = true;
+					button3.Visible = true;
+
+					label6.Text = currencyId.ToString();
+					textBox3.Text = currency.CurrencyName;
+					label7.Text = currencyId.ToString();
+					button8.Text = "Оновити";
 				}
 			}
 		}

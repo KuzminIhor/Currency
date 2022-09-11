@@ -8,6 +8,7 @@ namespace CurrencyApp.Repositories.Interfaces
 	{
 		public List<BankCurrency> GetBankCurrenciesCollectionInDateRange(DateTime dateFrom, DateTime dateTo);
 		public List<BankCurrency> GetBankCurrenciesCollection(int bankId);
+		public List<BankCurrency> GetBankCurrenciesCollectionByCurrency(int currencyId);
 		public BankCurrency GetBankCurrency(int bankCurrencyId);
 		public void AddBankCurrencyForm(Currency currency, Bank bank, double uahConvertation);
 		public void UpdateBankCurrency(BankCurrency bankCurrency);

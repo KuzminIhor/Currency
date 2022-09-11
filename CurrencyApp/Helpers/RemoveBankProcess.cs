@@ -24,6 +24,7 @@ namespace CurrencyApp.Helpers
 		public void Remove(int bankId)
 		{
 			var bank = bankRepository.GetBank(bankId);
+
 			bankRepository.RemoveBank(bank);
 		}
 	}

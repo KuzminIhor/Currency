@@ -273,9 +273,11 @@
     <Compile Include="Helpers\Abstracts\AbstractBankCurrencyHandler.cs" />
     <Compile Include="Helpers\Abstracts\AbstractBankHandler.cs" />
     <Compile Include="Helpers\Abstracts\AbstractCurrencyHandler.cs" />
+    <Compile Include="Helpers\Abstracts\AbstractUserHandler.cs" />
     <Compile Include="Helpers\AddBankCurrencyProcess.cs" />
     <Compile Include="Helpers\AddBankProcess.cs" />
     <Compile Include="Helpers\AddCurrencyProcess.cs" />
+    <Compile Include="Helpers\AddUserProcess.cs" />
     <Compile Include="Helpers\AuthenticationFieldsValidator.cs" />
     <Compile Include="Helpers\AuthenticationProcess.cs" />
     <Compile Include="Helpers\BankCurrencyFieldsValidator.cs" />
@@ -285,6 +287,7 @@
     <Compile Include="Helpers\Interfaces\IAddBankCurrencyProcess.cs" />
     <Compile Include="Helpers\Interfaces\IAddBankProcess.cs" />
     <Compile Include="Helpers\Interfaces\IAddCurrencyProcess.cs" />
+    <Compile Include="Helpers\Interfaces\IAddUserProcess.cs" />
     <Compile Include="Helpers\Interfaces\IBankCurrencyFieldsValidator.cs" />
     <Compile Include="Helpers\Interfaces\IBankFieldsValidator.cs" />
     <Compile Include="Helpers\Interfaces\IBankHandler.cs" />
@@ -294,18 +297,25 @@
     <Compile Include="Helpers\Interfaces\IRemoveBankCurrenciesBelongedToCurrencyProcess.cs" />
     <Compile Include="Helpers\Interfaces\IRemoveBankProcess.cs" />
     <Compile Include="Helpers\Interfaces\IRemoveCurrencyProcess.cs" />
+    <Compile Include="Helpers\Interfaces\IRemoveUserProcess.cs" />
     <Compile Include="Helpers\Interfaces\IRemoveUsersWorkingInBankProcess.cs" />
     <Compile Include="Helpers\Interfaces\IUpdateBankCurrencyProcess.cs" />
     <Compile Include="Helpers\Interfaces\IUpdateBankProcess.cs" />
     <Compile Include="Helpers\Interfaces\IUpdateCurrencyProcess.cs" />
+    <Compile Include="Helpers\Interfaces\IUpdateUserProcess.cs" />
+    <Compile Include="Helpers\Interfaces\IUserFieldsValidator.cs" />
+    <Compile Include="Helpers\Interfaces\IUserHandler.cs" />
     <Compile Include="Helpers\RemoveBankCurrenciesBelongedToBankProcess.cs" />
     <Compile Include="Helpers\RemoveBankCurrenciesBelongedToCurrencyProcess.cs" />
     <Compile Include="Helpers\RemoveBankProcess.cs" />
     <Compile Include="Helpers\RemoveCurrencyProcess.cs" />
+    <Compile Include="Helpers\RemoveUserProcess.cs" />
     <Compile Include="Helpers\RemoveUsersWorkingInBankProcess.cs" />
     <Compile Include="Helpers\UpdateBankCurrencyProcess.cs" />
     <Compile Include="Helpers\UpdateBankProcess.cs" />
     <Compile Include="Helpers\UpdateCurrencyProcess.cs" />
+    <Compile Include="Helpers\UpdateUserProcess.cs" />
+    <Compile Include="Helpers\UserFieldsValidator.cs" />
     <Compile Include="Model\Enums\FormType.cs" />
     <Compile Include="Helpers\Interfaces\IAuthenticationFieldsValidator.cs" />
     <Compile Include="Helpers\Interfaces\IAuthenticationProcess.cs" />
@@ -314,6 +324,7 @@
     <Compile Include="Model\Exceptions\BankCurrencyModifyException.cs" />
     <Compile Include="Model\Exceptions\BankModifyException.cs" />
     <Compile Include="Model\Exceptions\CurrencyModifyException.cs" />
+    <Compile Include="Model\Exceptions\UserModifyException.cs" />
     <Compile Include="Services\BankService.cs" />
     <Compile Include="Services\CurrencyService.cs" />
     <Compile Include="Services\Interfaces\IBankCurrencyService.cs" />
@@ -335,6 +346,7 @@
     <Compile Include="Services\BankCurrencyService.cs" />
     <Compile Include="Services\AuthenticationService.cs" />
     <Compile Include="Services\FormRedirectionService.cs" />
+    <Compile Include="Services\Interfaces\IUserService.cs" />
     <Compile Include="Services\RenderBankDataTableRowsService.cs" />
     <Compile Include="Services\RenderCurrencyDataTableRowsService.cs" />
     <Compile Include="Services\RenderUserDataTableRowsService.cs" />
@@ -370,6 +382,7 @@
     <Compile Include="Core\DBAppContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\User.cs" />
+    <Compile Include="Services\UserService.cs" />
     <EmbeddedResource Include="Forms\AddBankCurrencyForm.resx">
       <DependentUpon>AddBankCurrencyForm.cs</DependentUpon>
     </EmbeddedResource>

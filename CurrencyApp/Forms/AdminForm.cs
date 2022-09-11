@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.EntityFrameworkCore;
 using CurrencyApp.Core;
@@ -16,7 +11,6 @@ using CurrencyApp.Model.Exceptions;
 using CurrencyApp.Repositories.Interfaces;
 using CurrencyApp.Services;
 using NLog;
-using Currency = CurrencyApp.Model.Currency;
 
 namespace CurrencyApp
 {
@@ -30,6 +24,7 @@ namespace CurrencyApp
 
 		private readonly IBankService bankService;
 		private readonly ICurrencyService currencyService;
+		private readonly IUserService userService;
 
 		private readonly IRenderDataTableRows renderBank;
 		private readonly IRenderDataTableRows renderUser;
@@ -45,6 +40,7 @@ namespace CurrencyApp
 		{
 			bankService = ServiceLocator.Get<IBankService>();
 			currencyService = ServiceLocator.Get<ICurrencyService>();
+			userService = ServiceLocator.Get<IUserService>();
 
 			renderBank = ServiceLocator.Get<IRenderDataTableRows>(nameof(RenderBankDataTableRowsService));
 			renderUser = ServiceLocator.Get<IRenderDataTableRows>(nameof(RenderUserDataTableRowsService));
@@ -174,7 +170,6 @@ namespace CurrencyApp
 			button10.Visible = true;
 			button10.Text = "Додати";
 
-
 			comboBox1.Visible = true;
 			comboBox1.DataSource = bankRepository.GetBanks();
 			comboBox1.DisplayMember = "BankName";
@@ -186,59 +181,53 @@ namespace CurrencyApp
 			var firstName = textBox2.Text.Trim();
 			var bank = comboBox1.SelectedItem as Bank;
 
-			if (string.IsNullOrEmpty(lastName))
+			if (button10.Text.Equals("Додати"))
 			{
-				MessageBox.Show("Ви не ввели ім'я!");
-				return;
-			}
-
-			if (string.IsNullOrEmpty(firstName))
-			{
-				MessageBox.Show("Ви не ввели прізвище!");
-				return;
-			}
-
-			if (bank == null)
-			{
-				MessageBox.Show("Ви не обрали банк!");
-				return;
-			}
-
-			using (DBAppContext db = new DBAppContext())
-			{
-				var bankInDb = db.Banks.FirstOrDefault(b => b.Id == bank.Id);
-
-				if (button10.Text.Equals("Додати"))
+				try
 				{
-					var chars = "QWERTYUIOP[]qwertyuiop1234567890";
-					var stringChars = new char[6];
-					var random = new Random();
+					userService.AddUser(firstName, lastName, bank);
 
-					for (int i = 0; i < stringChars.Length; i++)
-					{
-						stringChars[i] = chars[random.Next(chars.Length)];
-					}
-
-					db.Users.Add(new User()
-					{
-						FirstName = firstName,
-						LastName = lastName,
-						UserName = $"{firstName}{lastName}",
-						Bank = bankInDb,
-						Password = new string(stringChars),
-						IsBankUser = true
-					});
-				} else if (button10.Text.Equals("Оновити"))
-				{
-					var user = db.Users.Include(u => u.Bank).FirstOrDefault(u => u.Id == Convert.ToInt32(label5.Text));
-					user.Bank = bankInDb;
-					user.FirstName = firstName;
-					user.LastName = lastName;
-
-					db.Users.Update(user);
+					_logger.Info(
+						$"Користувач був доданий адміністратором. Ім'я: {firstName}, Прізвище: {lastName}, ID банку: {bank?.Id}");
 				}
-				
-				db.SaveChanges();
+				catch (UserModifyException ex)
+				{
+					MessageBox.Show(ex.Message);
+
+					_logger.Error(
+						$"ПОМИЛКА при додаванні користувача з іменем {firstName}, прізвищем {lastName}, ID банку {bank?.Id}: {ex.Message}");
+
+					return;
+				}
+				catch (Exception ex)
+				{
+					_logger.Error(
+						$"ПОМИЛКА при додаванні користувача з іменем {firstName}, прізвищем {lastName}, ID банку {bank?.Id}: {ex.Message}");
+				}
+			}
+			else if (button10.Text.Equals("Оновити"))
+			{
+				try
+				{
+					userService.UpdateUser(Convert.ToInt32(label5.Text), firstName, lastName, bank);
+
+					_logger.Info(
+						$"Користувач з ID {Convert.ToInt32(label5.Text)} був змінений адміністратором. Ім'я: {firstName}, Прізвище: {lastName}, ID банку: {bank?.Id}");
+				}
+				catch (UserModifyException ex)
+				{
+					MessageBox.Show(ex.Message);
+
+					_logger.Error(
+						$"ПОМИЛКА при оновленні адміністратором користувача з ID {Convert.ToInt32(label5.Text)}, іменем {firstName}, прізвищем {lastName}, ID банку {bank?.Id}: {ex.Message}");
+
+					return;
+				}
+				catch (Exception ex)
+				{
+					_logger.Error(
+						$"ПОМИЛКА при оновленні адміністратором користувача з ID {Convert.ToInt32(label5.Text)}, іменем {firstName}, прізвищем {lastName}, ID банку {bank?.Id}: {ex.Message}");
+				}
 			}
 
 			label1.Visible = false;
@@ -420,22 +409,27 @@ namespace CurrencyApp
 			{
 				if (e.ColumnIndex == dataGridView1.Columns["Видалити"].Index)
 				{
-					DialogResult dr1 = MessageBox.Show("Ви хочете видалити користувача?", "Підтвердження", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Information);
+					DialogResult dr1 = MessageBox.Show("Ви хочете видалити користувача?", "Підтвердження",
+						MessageBoxButtons.YesNoCancel, MessageBoxIcon.Information);
+
 					if (dr1 == DialogResult.Yes)
 					{
-						using (DBAppContext db = new DBAppContext())
+						DataRow[] dr = usersDataTable.Select("ROWID = " + (e.RowIndex + 1));
+						var userId = Convert.ToInt32(dr[0].ItemArray[1]);
+
+						try
 						{
-							DataRow[] dr = usersDataTable.Select("ROWID = " + (e.RowIndex + 1));
-							var userId = Convert.ToInt32(dr[0].ItemArray[1]);
-							var user = db.Users.Include(p => p.Bank).ToList().FirstOrDefault(p => p.Id == userId);
-
-							db.Users.Remove(user);
-							db.SaveChanges();
-
-							FillDataTables();
+							userService.RemoveUser(userId);
 						}
+						catch (Exception ex)
+						{
+							_logger.Error($"ПОМИЛКА при видаленні користувача з ID {userId}: {ex.Message}");
+						}
+
+						FillDataTables();
 					}
-				} else if (e.ColumnIndex == dataGridView1.Columns["Оновити"].Index)
+				}
+				else if (e.ColumnIndex == dataGridView1.Columns["Оновити"].Index)
 				{
 					label1.Visible = true;
 					label2.Visible = true;
@@ -445,22 +439,20 @@ namespace CurrencyApp
 					button5.Visible = true;
 					button10.Visible = true;
 
-					using (DBAppContext db = new DBAppContext())
-					{
-						DataRow[] dr = usersDataTable.Select("ROWID = " + (e.RowIndex + 1));
-						var userId = Convert.ToInt32(dr[0].ItemArray[1]);
-						var user = db.Users.Include(p => p.Bank).ToList().FirstOrDefault(p => p.Id == userId);
 
-						label5.Text = user.Id.ToString();
-						textBox1.Text = user.LastName;
-						textBox2.Text = user.FirstName;
-						button10.Text = "Оновити";
+					DataRow[] dr = usersDataTable.Select("ROWID = " + (e.RowIndex + 1));
+					var userId = Convert.ToInt32(dr[0].ItemArray[1]);
+					var user = userRepository.GetUser(userId);
 
-						comboBox1.Visible = true;
-						comboBox1.DataSource = db.Banks.ToList();
-						comboBox1.SelectedItem = user.Bank;
-						comboBox1.DisplayMember = "BankName";
-					}
+					label5.Text = user.Id.ToString();
+					textBox1.Text = user.LastName;
+					textBox2.Text = user.FirstName;
+					button10.Text = "Оновити";
+
+					comboBox1.Visible = true;
+					comboBox1.DataSource = bankRepository.GetBanks();
+					comboBox1.SelectedItem = user.Bank;
+					comboBox1.DisplayMember = "BankName";
 				}
 			}
 		}
@@ -526,6 +518,7 @@ namespace CurrencyApp
 						MessageBox.Show(
 							"Ви хочете видалити валюту?\nУВАГА: При видаленні валюти будуть видалені всі курси валют, які до неї відносяться",
 							"Підтвердження", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Information);
+
 					if (dr1 == DialogResult.Yes)
 					{
 						DataRow[] dr = currenciesDataTable.Select("ROWID = " + (e.RowIndex + 1));
@@ -541,8 +534,6 @@ namespace CurrencyApp
 						catch (Exception ex)
 						{
 							_logger.Error($"ПОМИЛКА при видаленні валюти з ID {currencyId}: {ex.Message}");
-
-							return;
 						}
 
 						FillDataTables();

@@ -34,7 +34,7 @@ namespace CurrencyApp.Tests.Repositories
 		[Theory, AutoMoqData]
 		public void GetByUserName_WhenDataNotExists_ReturnNull()
 		{
-			var result = userRepository.GetByUserName(It.IsAny<string>());
+			var result = userRepository.GetUser(It.IsAny<string>());
 
 			Assert.Null(result);
 		}
@@ -42,7 +42,7 @@ namespace CurrencyApp.Tests.Repositories
 		[Theory, AutoMoqData]
 		public void GetByUserName_WhenDataExists_ThenReturnUser()
 		{
-			var result = userRepository.GetByUserName("test2test2");
+			var result = userRepository.GetUser("test2test2");
 
 			Assert.NotNull(result);
 		}

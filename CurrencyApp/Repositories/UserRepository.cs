@@ -16,9 +16,14 @@ namespace CurrencyApp.Repositories
 			this.db = dbApp;
 		}
 
-		public User GetByUserName(string username)
+		public User GetUser(string username)
 		{
 			return db.Users.FirstOrDefault(u => u.UserName.Equals(username));
+		}
+
+		public User GetUser(int userId)
+		{
+			return db.Users.Include(p => p.Bank).ToList().FirstOrDefault(p => p.Id == userId);
 		}
 
 		public List<User> GetUsersCollection(int bankId)
@@ -38,7 +43,19 @@ namespace CurrencyApp.Repositories
 			return user.Password.Equals(password);
 		}
 
-		public void RemoveUsers(List<User> users)
+		public void AddUser(User user)
+		{
+			db.Users.Add(user);
+			db.SaveChanges();
+		}
+
+		public void UpdateUser(User user)
+		{
+			db.Users.Update(user);
+			db.SaveChanges();
+		}
+
+		public void RemoveUsers(params User[] users)
 		{
 			db.Users.RemoveRange(users);
 			db.SaveChanges();

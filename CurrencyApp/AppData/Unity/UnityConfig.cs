@@ -32,6 +32,7 @@ namespace CurrencyApp.AppData.Unity
 			ServiceLocator.RegisterSingleton<IBankCurrencyService, BankCurrencyService>();
 			ServiceLocator.RegisterSingleton<IBankService, BankService>();
 			ServiceLocator.RegisterSingleton<ICurrencyService, CurrencyService>();
+			ServiceLocator.RegisterSingleton<IUserService, UserService>();
 			ServiceLocator.RegisterSingleton<IFormRedirectionService, FormRedirectionService>();
 
 			ServiceLocator.RegisterSingleton<IRenderDataTableRows, RenderUserDataTableRowsService>(nameof(RenderUserDataTableRowsService));
@@ -60,6 +61,11 @@ namespace CurrencyApp.AppData.Unity
 			ServiceLocator.RegisterSingleton<IUpdateCurrencyProcess, UpdateCurrencyProcess>();
 			ServiceLocator.RegisterSingleton<IRemoveCurrencyProcess, RemoveCurrencyProcess>();
 			ServiceLocator.RegisterSingleton<IRemoveBankCurrenciesBelongedToCurrencyProcess, RemoveBankCurrenciesBelongedToCurrencyProcess>();
+
+			ServiceLocator.RegisterSingleton<IUserFieldsValidator, UserFieldsValidator>();
+			ServiceLocator.RegisterSingleton<IAddUserProcess, AddUserProcess>();
+			ServiceLocator.RegisterSingleton<IUpdateUserProcess, UpdateUserProcess>();
+			ServiceLocator.RegisterSingleton<IRemoveUserProcess, RemoveUserProcess>();
 
 
 			//Register repositories

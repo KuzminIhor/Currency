@@ -25,7 +25,7 @@ namespace CurrencyApp.Helpers
 		{
 			var users = userRepository.GetUsersCollection(bankId);
 			
-			userRepository.RemoveUsers(users);
+			userRepository.RemoveUsers(users.ToArray());
 		}
 	}
 }

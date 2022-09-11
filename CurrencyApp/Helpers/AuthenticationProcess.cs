@@ -30,7 +30,7 @@ namespace CurrencyApp.Helpers
 
 		public void Authenticate(string userName, string password)
 		{
-			User user = userRepository.GetByUserName(userName);
+			User user = userRepository.GetUser(userName);
 				
 			if (user == null)
 			{

@@ -437,7 +437,6 @@ namespace CurrencyApp
 					button5.Visible = true;
 					button10.Visible = true;
 
-
 					DataRow[] dr = usersDataTable.Select("ROWID = " + (e.RowIndex + 1));
 					var userId = Convert.ToInt32(dr[0].ItemArray[1]);
 					var user = userRepository.GetUser(userId);

@@ -20,7 +20,6 @@ namespace CurrencyApp.AppData.Unity
 			var dbApp = new DBAppContext();
 			ServiceLocator.RegisterSingleton(dbApp);
 
-
 			//Register services
 			ServiceLocator.RegisterSingleton<IAuthenticationService, AuthenticationService>();
 			ServiceLocator.RegisterSingleton<IBankCurrencyService, BankCurrencyService>();
@@ -32,7 +31,6 @@ namespace CurrencyApp.AppData.Unity
 			ServiceLocator.RegisterSingleton<IRenderDataTableRows, RenderUserDataTableRowsService>(nameof(RenderUserDataTableRowsService));
 			ServiceLocator.RegisterSingleton<IRenderDataTableRows, RenderCurrencyDataTableRowsService>(nameof(RenderCurrencyDataTableRowsService));
 			ServiceLocator.RegisterSingleton<IRenderDataTableRows, RenderBankDataTableRowsService>(nameof(RenderBankDataTableRowsService));
-
 
 			//Register helpers
 			ServiceLocator.RegisterSingleton<IAuthenticationFieldsValidator, AuthenticationFieldsValidator>();
@@ -60,7 +58,6 @@ namespace CurrencyApp.AppData.Unity
 			ServiceLocator.RegisterSingleton<IAddUserProcess, AddUserProcess>();
 			ServiceLocator.RegisterSingleton<IUpdateUserProcess, UpdateUserProcess>();
 			ServiceLocator.RegisterSingleton<IRemoveUserProcess, RemoveUserProcess>();
-
 
 			//Register repositories
 			ServiceLocator.RegisterSingleton<IUserRepository, UserRepository>();

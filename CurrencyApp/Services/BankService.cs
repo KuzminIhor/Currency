@@ -15,8 +15,6 @@ namespace CurrencyApp.Services
 		private readonly IRemoveBankCurrenciesBelongedToBankProcess removeBankCurrenciesBelongedToBankProcess;
 		private readonly IRemoveBankProcess removeBankProcess;
 
-		private readonly IBankRepository bankRepository;
-
 		public BankService()
 		{
 			validator = ServiceLocator.Get<IBankFieldsValidator>();
@@ -27,8 +25,6 @@ namespace CurrencyApp.Services
 			removeBankCurrenciesBelongedToBankProcess =
 				ServiceLocator.Get<IRemoveBankCurrenciesBelongedToBankProcess>();
 			removeBankProcess = ServiceLocator.Get<IRemoveBankProcess>();
-
-			bankRepository = ServiceLocator.Get<IBankRepository>();
 		}
 
 		public void AddBank(string bankName)

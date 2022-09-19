@@ -48,18 +48,21 @@ namespace CurrencyApp
 				formRedirectionService.Redirect(this, formToRedirect);
 
 				var userType = CurrentUser.GetInstance().Id == 1 ? "Адмін" : "Банк";
+
 				_logger.Info($"Аутентифікація пройшла успішно. Тип користувача: {userType}. ID користувача: {CurrentUser.GetInstance().Id}");
 			}
 			catch (AuthenticationException ex)
 			{
 				label2.Visible = true;
 				label2.Text = ex.Message;
+
 				_logger.Error($"ПОМИЛКА під час аутентифікації користувачем: {ex.Message}");
 			}
 			catch (Exception ex)
 			{
 				label2.Visible = true;
 				label2.Text = "Сталась якась помилка";
+
 				_logger.Error($"ПОМИЛКА під час аутентифікації користувачем: {ex.Message}");
 			}
 		}
@@ -70,12 +73,14 @@ namespace CurrencyApp
 			{
 				var formToRedirect = (FormType) authenticationService.AuthenticateGuest();
 				formRedirectionService.Redirect(this, formToRedirect);
+
 				_logger.Info("Аутентифікація пройшла успішно. Тип користувача: Гість");
 			}
 			catch (Exception ex)
 			{
 				label2.Visible = true;
 				label2.Text = "Сталась якась помилка";
+
 				_logger.Error($"ПОМИЛКА під час аутентифікації гостем: {ex.Message}");
 			}
 		}

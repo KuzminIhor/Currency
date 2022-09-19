@@ -67,12 +67,14 @@ namespace CurrencyApp
 			{
 				label1.Visible = true;
 				label1.Text = ex.Message;
+
 				_logger.Error($"ПОМИЛКА під час додавання курсу валюти користувачем {CurrentUser.GetInstance().Id}: {ex.Message}");
 			}
 			catch (Exception ex)
 			{
 				label1.Visible = true;
 				label1.Text = "Сталась якась помилка";
+
 				_logger.Error($"ПОМИЛКА під час додавання курсу валюти користувачем {CurrentUser.GetInstance().Id}: {ex.Message}");
 			}
 		}

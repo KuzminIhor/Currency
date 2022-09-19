@@ -52,6 +52,7 @@ namespace CurrencyApp
 	        dataGridView1.Columns.Clear();
 
 	        dt = new DataTable();
+
 	        dt.Columns.Add("RowId");
 	        dt.Columns.Add("Id");
 	        dt.Columns.Add("Назва валюти");
@@ -77,14 +78,14 @@ namespace CurrencyApp
 	        btn.Text = "Оновити курс";
 	        btn.Name = "Оновити";
 	        btn.UseColumnTextForButtonValue = true;
-	        dataGridView1.Columns.Add(btn);
 
 	        DataGridViewButtonColumn btn2 = new DataGridViewButtonColumn();
 	        btn2.HeaderText = "";
 	        btn2.Text = "Видалити курс";
 	        btn2.Name = "Видалити";
 	        btn2.UseColumnTextForButtonValue = true;
-	        dataGridView1.Columns.Add(btn2);
+
+	        dataGridView1.Columns.AddRange(btn, btn2);
         }
 
         private void AddCurrencyButton_Click(object sender, EventArgs e)
@@ -96,28 +97,29 @@ namespace CurrencyApp
 		{
             if (dataGridView1.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0 && e.RowIndex + 1 < dataGridView1.Rows.Count)
             {
-                if (e.ColumnIndex == dataGridView1.Columns["Оновити"].Index)
-                {
-	                try
-	                {
-		                label1.Visible = true;
-		                textBox1.Visible = true;
+	            if (e.ColumnIndex == dataGridView1.Columns["Оновити"].Index)
+	            {
+		            try
+		            {
+			            label1.Visible = true;
+			            textBox1.Visible = true;
 
-		                DataRow[] dr = dt.Select("ROWID = " + (e.RowIndex + 1));
-		                var bankCurrencyId = Convert.ToInt32(dr[0].ItemArray[1]);
-		                label3.Text = bankCurrencyId.ToString();
+			            DataRow[] dr = dt.Select("ROWID = " + (e.RowIndex + 1));
+			            var bankCurrencyId = Convert.ToInt32(dr[0].ItemArray[1]);
+			            label3.Text = bankCurrencyId.ToString();
 
-		                textBox1.Text = bankCurrencyRepository.GetBankCurrency(bankCurrencyId)
-			                .UAHConvertation.ToString();
+			            textBox1.Text = bankCurrencyRepository.GetBankCurrency(bankCurrencyId)
+				            .UAHConvertation.ToString();
 
-		                button1.Visible = true;
-	                }
-	                catch (Exception exception)
-	                {
-						_logger.Error($"ПОМИЛКА під час відображення блоку Оновлення курсу валюти: {exception.Message}");
-					}
-                }
-                else if (e.ColumnIndex == dataGridView1.Columns["Видалити"].Index)
+			            button1.Visible = true;
+		            }
+		            catch (Exception exception)
+		            {
+			            _logger.Error(
+				            $"ПОМИЛКА під час відображення блоку Оновлення курсу валюти: {exception.Message}");
+		            }
+	            }
+	            else if (e.ColumnIndex == dataGridView1.Columns["Видалити"].Index)
                 {
 	                var dr = dt.Select().ToList()[e.RowIndex];
 	                var bankCurrencyId = Convert.ToInt32(dr.ItemArray[1]);
@@ -125,6 +127,7 @@ namespace CurrencyApp
 	                try
 	                {
 		                bankCurrencyService.RemoveBankCurrency(bankCurrencyId);
+
 						_logger.Info($"Курс валюти з ID {bankCurrencyId} був успішно видалений користувачем {CurrentUser.GetInstance().Id}");
 					}
 	                catch (Exception ex)
@@ -146,6 +149,7 @@ namespace CurrencyApp
 			try
 			{
 				bankCurrencyService.UpdateBankCurrency(bankCurrencyId, convertation);
+
 				_logger.Info($"Курс валюти з ID {bankCurrencyId} було оновлено користувачем {CurrentUser.GetInstance().Id}");
 
 				label2.Visible = false;
@@ -159,12 +163,14 @@ namespace CurrencyApp
 			{
 				label2.Visible = true;
 				label2.Text = ex.Message;
+
 				_logger.Error($"ПОМИЛКА при оновлені курсу валюти з ID {bankCurrencyId} користувачем {CurrentUser.GetInstance().Id}: {ex.Message}");
 			}
 			catch (Exception ex)
 			{
 				label2.Visible = true;
 				label2.Text = "Сталась якась помилка";
+
 				_logger.Error($"ПОМИЛКА при оновлені курсу валюти з ID {bankCurrencyId} користувачем {CurrentUser.GetInstance().Id}: {ex.Message}");
 			}
 		}
